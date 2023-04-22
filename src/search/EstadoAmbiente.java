@@ -11,10 +11,11 @@ import frsf.cidisi.faia.state.EnvironmentState;
 public class EstadoAmbiente extends EnvironmentState {
 
 	private Integer energiaPokemon;
+	private String posicion;
 	private Integer energiaBoss;
 	private Integer cantidadEnemigos;
 	private boolean bossDerrotado;
-	
+	Graph graph = new Graph();
 	
 	public EstadoAmbiente() {
 		initState();
@@ -31,7 +32,6 @@ public class EstadoAmbiente extends EnvironmentState {
 		Node F= new Node("F");
 		Node G= new Node("G");
 		
-		
 		A.addEdge(new Edge (A,B));
 		A.addEdge(new Edge (A,C));
 		A.addEdge(new Edge (A,D));
@@ -47,7 +47,6 @@ public class EstadoAmbiente extends EnvironmentState {
 		F.addEdge(new Edge (F,C));
 		F.addEdge(new Edge (F,G));
 		
-		Graph graph = new Graph();
         graph.addNode(A);
         graph.addNode(B);
         graph.addNode(C);
@@ -56,26 +55,33 @@ public class EstadoAmbiente extends EnvironmentState {
         graph.addNode(F);
         graph.addNode(G);
  
-        entidad a= new Boss(1,30);                            //Id 1, energia del boss=30             
-		List<entidad> b = new ArrayList<>();
-		b.add(a);
-		G.setEntidades(b);                                 //asigno boss a nodo G
+        energiaPokemon=numeroAleatorio(10,20);
+		posicion="A";
 		
-		entidad p= new Pokebolas(2,numeroAleatorio(5,10));         //asigno pokebola id 2 con energia aleatoria entre 5 y 10                             
-		List<entidad> b1 = new ArrayList<>();
-		b1.add(p);
-		E.setEntidades(b1);                //Asigno la pokebola al nodo E
+        entidad a= new Boss(1,30);   
+		G.setEntidades(a);                     
+		
+		entidad p= new Pokebolas(2,numeroAleatorio(5,10));                                     
+		E.setEntidades(p);     
         
 		entidad w= new Enemigos(3,numeroAleatorio(1,3));         //asigno enemigo id 3 con numero aleatorio entre 5 y 10                             
-		List<entidad> b2 = new ArrayList<>();
-		b2.add(w);
 		
-		C.setEntidades(b2);               
-		D.setEntidades(b2);
-		B.setEntidades(b2);
+		C.setEntidades(w);     
+		D.setEntidades(w);
+		B.setEntidades(w);
+		
+		//Pokemon j= new Pokemon(4,numeroAleatorio(10,20));
+		//j1 = new ArrayList<>();
+		//j1.add(j);												//Asigno a nuestro pokemon al nodo A
+		//A.setEntidades(j1);
+		
 		bossDerrotado = false;
 	}	
-		
+	
+	public Graph getGraph() {
+		return graph;
+	}
+	
 	public Integer getEnergiaPokemon() {
 		return energiaPokemon;
 	}
@@ -117,7 +123,23 @@ public class EstadoAmbiente extends EnvironmentState {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String getPosicion() {
+		return posicion;
+	}
+
+	public void setPosicion(String posicion) {
+		this.posicion = posicion;
+	}
 	
+	public EstadoAmbiente getEstadoAmbiente() {
+	return this;                                        //VER SI ANDA
+	}
+
 	
+	public void actualizarEnemigos() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

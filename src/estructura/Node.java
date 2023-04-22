@@ -2,22 +2,23 @@ package estructura;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import entidades.entidad;
 
 public class Node {
 	  private String id;   //id del nodo
-	  private List<entidad> entidades;  //Lista de entidades en el nodo
-	    private List<Edge> edges;   //Lista de destinos del nodo
+	  private entidad entidades;  //Vista de entidades en el nodo
+	  private List<Edge> edges;   //Vista de destinos del nodo
 	 
 	    public Node(String id) {
 	        this.id = id;
 	    }
 	 
-	    public String getCity() {
+	    public String getId() {
 	        return id;
 	    }
 	 
-	    public void setCity(String id) {
+	    public void setId(String id) {
 	        this.id = id;
 	    }
 	 
@@ -37,11 +38,11 @@ public class Node {
 	        return "\n \tNode [Ubicacion=" + id + ", Posibles destinos=" + edges + "]";
 	    }
 
-		public List<entidad> getEntidades() {
+		public entidad getEntidades() {
 			return entidades;
 		}
 
-		public void setEntidades(List<entidad> entidades) {
-			this.entidades = entidades;
+		public void setEntidades(entidad a) {
+			this.entidades = a;
 		}
 	}

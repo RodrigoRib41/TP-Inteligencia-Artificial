@@ -8,4 +8,8 @@ public abstract class entidad {
 		this.id=id;
 		this.energia=energia;
 	}
+	
+	public void setEnergia(Integer energia1) {
+		energia=energia1;
+	}
 }
