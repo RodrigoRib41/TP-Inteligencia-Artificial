@@ -2,6 +2,7 @@ package search;
 
 import java.util.List;
 
+import estructura.Node;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 
@@ -16,6 +17,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 	private Integer tiempoSatelite;
 	private List<Integer> tiempoPoderEspecial;
 	private boolean bossDerrotado=false;
+	private List<Node> adyacentes;
 	
 	public Integer getCantidadEnemigos() {
 		return cantidadEnemigos;
@@ -110,7 +112,15 @@ public class EstadoPokemon extends SearchBasedAgentState {
 	public void setBossDerrotado(boolean bossDerrotado) {
 		this.bossDerrotado = bossDerrotado;
 	}
+	public List<Node> getAdyacentes() {
+		return adyacentes;
+	}
 
+
+
+	public void setAdyacentes(List<Node> adyacentes) {
+		this.adyacentes = adyacentes;
+	}
 
 
 	public EstadoPokemon() {
@@ -150,5 +160,9 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		
 		
 	}
+
+
+
+	
 
 }
