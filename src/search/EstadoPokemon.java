@@ -9,22 +9,23 @@ import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 public class EstadoPokemon extends SearchBasedAgentState {
 	
 	private Integer cantidadEnemigos;
-	private String posicion;
+	private Integer posicion;
 	private Integer energiaInicial;
 	private Integer energiaActual;
+	private Integer ubicacionBoss;           
 	// Ubicacion de pokebolas y boss luego de utilizar el satelite
-	private Integer cantidadEnergiaBoss=0;
+	private Integer cantidadEnergiaBoss;
 	private Integer tiempoSatelite;
 	private List<Integer> tiempoPoderEspecial;
 	private boolean bossDerrotado=false;
 	private List<Node> adyacentes;
 	private Integer cicloPercepcion;
 	
+	
+	
 	public Integer getCantidadEnemigos() {
 		return cantidadEnemigos;
 	}
-
-
 
 	public void setCantidadEnemigos(Integer cantidadEnemigos) {
 		this.cantidadEnemigos = cantidadEnemigos;
@@ -32,13 +33,13 @@ public class EstadoPokemon extends SearchBasedAgentState {
 
 
 
-	public String getPosicion() {
+	public Integer getPosicion() {
 		return posicion;
 	}
 
 
 
-	public void setPosicion(String posicion) {
+	public void setPosicion(Integer posicion) {
 		this.posicion = posicion;
 	}
 
@@ -172,6 +173,18 @@ public class EstadoPokemon extends SearchBasedAgentState {
 
 	public void setCicloPercepcion(Integer cicloPercepcion) {
 		this.cicloPercepcion = cicloPercepcion;
+	}
+
+
+
+	public Integer getUbicacionBoss() {
+		return ubicacionBoss;
+	}
+
+
+
+	public void setUbicacionBoss(Integer ubicacionBoss) {
+		this.ubicacionBoss = ubicacionBoss;
 	}
 
 

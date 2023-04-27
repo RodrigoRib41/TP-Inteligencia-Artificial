@@ -11,7 +11,8 @@ import frsf.cidisi.faia.state.EnvironmentState;
 public class EstadoAmbiente extends EnvironmentState {
 
 	private Integer energiaPokemon;
-	private String posicion;
+	private List<Boolean> poderEspecial;
+	private Integer posicion;
 	private Integer energiaBoss;
 	private Integer cantidadEnemigos;
 	private boolean bossDerrotado;
@@ -25,13 +26,13 @@ public class EstadoAmbiente extends EnvironmentState {
 	@Override
 	public void initState() {
 		// GENERAR MAPA INICIALMENTE CON LA ESTRUCTURA DE GRAFO
-		Node A= new Node("A");
-		Node B= new Node("B");
-		Node C= new Node("C");               //Nodos iniciales de prueba
-		Node D= new Node("D");
-		Node E= new Node("E");
-		Node F= new Node("F");
-		Node G= new Node("G");
+		Node A= new Node(0);
+		Node B= new Node(1);
+		Node C= new Node(2);               //Nodos iniciales de prueba
+		Node D= new Node(3);
+		Node E= new Node(4);
+		Node F= new Node(5);
+		Node G= new Node(6);
 		
 		A.addEdge(new Edge (A,B));
 		A.addEdge(new Edge (A,C));
@@ -55,28 +56,28 @@ public class EstadoAmbiente extends EnvironmentState {
         graph.addNode(E);
         graph.addNode(F);
         graph.addNode(G);
- 
-        energiaPokemon=numeroAleatorio(10,20);
-		posicion="A";
 		
         entidad a= new Boss(1,30);   
-		G.setEntidades(a);                     
+		G.setEntidad(a);                     
 		
 		entidad p= new Pokebolas(2,numeroAleatorio(5,10));                                     
-		E.setEntidades(p);     
+		E.setEntidad(p);     
         
 		entidad w= new Enemigos(3,numeroAleatorio(1,3));         //asigno enemigo id 3 con numero aleatorio entre 5 y 10                             
 		
-		C.setEntidades(w);     
-		D.setEntidades(w);
-		B.setEntidades(w);
+		C.setEntidad(w);     
+		D.setEntidad(w);
+		B.setEntidad(w);
 		
-		//Pokemon j= new Pokemon(4,numeroAleatorio(10,20));
-		//j1 = new ArrayList<>();
-		//j1.add(j);												//Asigno a nuestro pokemon al nodo A
-		//A.setEntidades(j1);
+		
+		energiaPokemon=numeroAleatorio(10,20);
+		posicion=0;									//Seteo la posicion del pokemon
 		cicloPercepcion=0;
 		bossDerrotado = false;
+		
+		poderEspecial.set(0, false);
+		poderEspecial.set(1, false);
+		poderEspecial.set(2, false);
 	}	
 	
 	public Graph getGraph() {
@@ -125,11 +126,11 @@ public class EstadoAmbiente extends EnvironmentState {
 		return null;
 	}
 
-	public String getPosicion() {
+	public Integer getPosicion() {
 		return posicion;
 	}
 
-	public void setPosicion(String posicion) {
+	public void setPosicion(Integer posicion) {
 		this.posicion = posicion;
 	}
 	
@@ -149,6 +150,14 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	public void setCicloPercepcion(Integer cicloPercepcion) {
 		this.cicloPercepcion = cicloPercepcion;
+	}
+
+	public List<Boolean> getPoderEspecial() {
+		return poderEspecial;
+	}
+
+	public void setPoderEspecial(List<Boolean> poderEspecial) {
+		this.poderEspecial = poderEspecial;
 	}
 
 }
