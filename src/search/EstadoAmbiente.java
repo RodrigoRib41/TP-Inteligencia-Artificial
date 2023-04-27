@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import estructura.*;
 import entidades.*;
-
+import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.state.EnvironmentState;
 
 public class EstadoAmbiente extends EnvironmentState {
@@ -15,6 +15,7 @@ public class EstadoAmbiente extends EnvironmentState {
 	private Integer energiaBoss;
 	private Integer cantidadEnemigos;
 	private boolean bossDerrotado;
+	private Integer cicloPercepcion;
 	Graph graph = new Graph();
 	
 	public EstadoAmbiente() {
@@ -74,7 +75,7 @@ public class EstadoAmbiente extends EnvironmentState {
 		//j1 = new ArrayList<>();
 		//j1.add(j);												//Asigno a nuestro pokemon al nodo A
 		//A.setEntidades(j1);
-		
+		cicloPercepcion=0;
 		bossDerrotado = false;
 	}	
 	
@@ -140,6 +141,14 @@ public class EstadoAmbiente extends EnvironmentState {
 	public void actualizarEnemigos() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Integer getCicloPercepcion() {
+		return cicloPercepcion;
+	}
+
+	public void setCicloPercepcion(Integer cicloPercepcion) {
+		this.cicloPercepcion = cicloPercepcion;
 	}
 
 }

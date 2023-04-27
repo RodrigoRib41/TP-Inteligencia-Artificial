@@ -29,6 +29,7 @@ public class Moverse extends SearchAction{
 		 estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
 		 estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
 		 estado.setTiempoSatelite(estado.getTiempoSatelite()+1);
+		 estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 	//	 estado.setTiempoPoderEspecial(null);                   //Ver de implementar los tiempos del poder especial
 		// TODO Auto-generated method stub
 		return estado;

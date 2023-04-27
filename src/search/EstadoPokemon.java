@@ -18,6 +18,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 	private List<Integer> tiempoPoderEspecial;
 	private boolean bossDerrotado=false;
 	private List<Node> adyacentes;
+	private Integer cicloPercepcion;
 	
 	public Integer getCantidadEnemigos() {
 		return cantidadEnemigos;
@@ -159,6 +160,18 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		// TODO Auto-generated method stub
 		
 		
+	}
+
+
+
+	public Integer getCicloPercepcion() {
+		return cicloPercepcion;
+	}
+
+
+
+	public void setCicloPercepcion(Integer cicloPercepcion) {
+		this.cicloPercepcion = cicloPercepcion;
 	}
 
 
