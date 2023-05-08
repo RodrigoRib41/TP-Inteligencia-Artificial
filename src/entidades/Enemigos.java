@@ -1,16 +1,16 @@
 package entidades;
 
 public class Enemigos extends entidad{
-	public Enemigos(Integer id, Integer energia) {
-		super(id, energia);
-		// TODO Auto-generated constructor stub
-	}
+	
 
 	private Integer id;
 	private Integer energia;
 	private Integer nivel;
 	
-	
+	public Enemigos(Integer id, Integer energia) {
+		super(id, energia);
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getId() {
 		return id;
 	}

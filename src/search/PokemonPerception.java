@@ -2,6 +2,7 @@ package search;
 
 import java.util.List;
 
+
 import estructura.*;
 import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
@@ -16,13 +17,14 @@ public class PokemonPerception extends Perception {
 	// Ubicacion de pokebolas y boss luego de utilizar el satelite
 	private Integer tiempoSatelite;
 	private List<Integer> tiempoPoderEspecial;
+	private List<Boolean> PoderEspecial;
 	private List<Node> adyacentes;
 	private List<Node> ubicacionesSatelite;
 	
 	
 	
 	public PokemonPerception() {
-
+		
 	}
 	
 	@Override
@@ -93,5 +95,13 @@ public class PokemonPerception extends Perception {
 
 	public void setUbicaciones(List<Node> ubicaciones) {
 		this.ubicacionesSatelite = ubicaciones;
+	}
+
+	public List<Boolean> getPoderEspecial() {
+		return PoderEspecial;
+	}
+
+	public void setPoderEspecial(List<Boolean> poderEspecial) {
+		PoderEspecial = poderEspecial;
 	}
 }

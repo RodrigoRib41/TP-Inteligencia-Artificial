@@ -1,14 +1,19 @@
 package search.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
+import entidades.Enemigos;
 import estructura.Edge;
+import estructura.Graph;
 import estructura.Node;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
 import frsf.cidisi.faia.state.EnvironmentState;
+import search.EstadoAmbiente;
 import search.EstadoPokemon;
 
 public class Pelear extends SearchAction {
@@ -20,14 +25,104 @@ public class Pelear extends SearchAction {
 		
 		List<Node> adyacentes=estado.getAdyacentes();
 		
-		List<Node> posiblesNodos=obtenerEnemigos(adyacentes);
+		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
+		
+		//probar
+	//	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo no pelear
+
+		Node nodoElegido=posiblesNodos.get(0);
+	
+	//	int valorMinimo = posiblesNodos.get(0).getEntidad().getEnergia();
+	//	for (Node objeto : posiblesNodos) {
+	//	    if (objeto.getEntidad().getEnergia() < valorMinimo) {
+	//	        valorMinimo = objeto.getEntidad().getEnergia();
+	//	        nodoElegido = objeto;
+	//	    }
+	//	}
 		
 		
 		
+		 estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
+		 estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
+		 
+		
+		 List<Boolean> listaPoder = estado.getPoderEspecial();
+		 List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
+		 obtenerEspeciales(listaPoder,listaTiempo);
+		 
+		 System.out.print(nodoElegido.getEntidad().toString());
+		 Integer porcentajeEnergia=(nodoElegido.getEntidad().getEnergia()*100)/estado.getEnergiaActual();
+		 
+		 List<Integer> tiempo=estado.getTiempoPoderEspecial();
+		 usarEspecial(porcentajeEnergia, listaPoder, tiempo);   //Devolvemos en listaPoder los poderes a utilizar
+		 estado.setTiempoPoderEspecial(tiempo);    //Seteo el tiempo del poder especial actualizado
+		 
+		 
+		 int energiaActual=estado.getEnergiaActual();
+		 int energiaPoder=0;
+		 if(listaPoder.get(0)) {
+			 energiaPoder=(int) (energiaActual*0.2+1);
+		 }
+		 
+		 if(listaPoder.get(1)) {
+			 energiaPoder=(int) (energiaActual*0.3+1);
+		 }
+ 
+		 if(listaPoder.get(2)) {
+			 energiaPoder=(int) (energiaActual*0.5+1);
+		 }
+		
+		 if(energiaPoder>nodoElegido.getEntidad().getEnergia()) {
+			 
+			 energiaActual+=(int)(nodoElegido.getEntidad().getEnergia())*0.2;
+		 }
+		 
+		 else {
+			 energiaActual+=energiaPoder-(nodoElegido.getEntidad().getEnergia())*0.2;
+		 }
+		 
+		
+		 
+		 estado.setEnergiaActual(energiaActual);
+		 estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		 estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
 		// TODO Auto-generated method stub
-		return null;
+	//	}
+		return estado;
 	}
 	
+	private void usarEspecial(Integer porcentajeEnergia, List<Boolean> listaPoder, List<Integer> tiempo) {
+	Integer aux=porcentajeEnergia;
+	
+	if(listaPoder.get(0)) {
+		tiempo.set(0, 0);
+		aux-=20;	
+	}
+	else {
+		tiempo.set(0, tiempo.get(0)+1);
+		listaPoder.set(0, false);
+	}
+	
+	if(listaPoder.get(1) && aux>15) {
+		tiempo.set(1, 0);
+		aux-=30;
+	}
+	else {
+		tiempo.set(1, tiempo.get(1)+1);
+		listaPoder.set(1, false);
+	}
+	
+	if(listaPoder.get(2) && aux>25) {
+		tiempo.set(2, 0);
+		aux-=50;
+	}
+	else {
+		tiempo.set(2, tiempo.get(2)+1);
+		listaPoder.set(2, false);
+	}
+		
+	}
+
 	public List<Node> obtenerAdyacentes(Node node){
 		
 		List<Node> nodosAdyacentes = new ArrayList<>();
@@ -44,28 +139,56 @@ public class Pelear extends SearchAction {
 		
 		List<Node> posiblesNodos= new ArrayList<>();
 	    for (Node adyacen : node) {
-	    	if (adyacen.getEntidades().getClass()==entidades.Enemigos.class) {
+	    	if (adyacen.getEntidad().getClass().equals(Enemigos.class)) {
 	    		posiblesNodos.add(adyacen);
 	    	}
 	    }
 	    return posiblesNodos;
 	}
+	
+	public List<Boolean> obtenerEspeciales (List<Boolean> listaPoder, List<Integer> tiempo){
+		if(tiempo.get(0)>=3) {
+			listaPoder.set(0, true);
+		 }
+		if(tiempo.get(1)>=3) {
+			listaPoder.set(1, true);
+		 }
+		if(tiempo.get(2)>=3) {
+			listaPoder.set(2, true);
+		 }
+		return listaPoder;
+	}
 	@Override
 	public Double getCost() {
 		// TODO Auto-generated method stub
-		return null;
+		return 1.5;
 	}
 
 	@Override
 	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-		// TODO Auto-generated method stub
-		return null;
+		EstadoPokemon estado= (EstadoPokemon) ast;
+		EstadoAmbiente ambiente= (EstadoAmbiente)est;
+		
+		ambiente.setPosicion(estado.getPosicion());
+		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
+		ambiente.setCicloPercepcion(estado.getCicloPercepcion());
+		ambiente.setCantidadEnemigos(estado.getCantidadEnemigos());
+		ambiente.setPoderEspecial(estado.getPoderEspecial());
+		
+		Graph aux=ambiente.getGraph();
+		
+		Integer indice=estado.getPosicion();
+		aux.getNodes().get(indice).setEntidad(null);
+		
+		ambiente.setGraph(aux);
+		
+		return ambiente;
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Pelear";
 	}
 
 }

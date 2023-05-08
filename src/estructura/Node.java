@@ -7,7 +7,9 @@ import entidades.entidad;
 
 public class Node {
 	  private Integer id;   //Id del nodo
-	  private entidad entidad;  //Entidad en el nodo
+	  private entidad entidad;
+	  private entidades entidad1;  //Entidad en el nodo
+	  private Integer energia;
 	  private List<Edge> edges;   //Arista
 	 
 	    public Node(Integer id) {
@@ -38,11 +40,21 @@ public class Node {
 	        return "\n \tNode [Ubicacion=" + id + ", Posibles destinos=" + edges + "]";
 	    }
 
+		
+
+		public Integer getEnergia() {
+			return energia;
+		}
+
+		public void setEnergia(Integer energia) {
+			this.energia = energia;
+		}
+
 		public entidad getEntidad() {
 			return entidad;
 		}
 
-		public void setEntidad(entidad a) {
-			this.entidad = a;
+		public void setEntidad(entidad entidad) {
+			this.entidad = entidad;
 		}
 	}

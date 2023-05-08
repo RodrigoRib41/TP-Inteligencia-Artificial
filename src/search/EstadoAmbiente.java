@@ -11,13 +11,16 @@ import frsf.cidisi.faia.state.EnvironmentState;
 public class EstadoAmbiente extends EnvironmentState {
 
 	private Integer energiaPokemon;
-	private List<Boolean> poderEspecial;
+	private Integer energiaInicial;
+	private List<Boolean> poderEspecial=new ArrayList<>();
+	private List<Integer> tiempoPoderEspecial=new ArrayList<Integer>(3);
+
 	private Integer posicion;
 	private Integer energiaBoss;
 	private Integer cantidadEnemigos;
 	private boolean bossDerrotado;
 	private Integer cicloPercepcion;
-	Graph graph = new Graph();
+	private Graph graph=new Graph();
 	
 	public EstadoAmbiente() {
 		initState();
@@ -30,58 +33,70 @@ public class EstadoAmbiente extends EnvironmentState {
 		Node B= new Node(1);
 		Node C= new Node(2);               //Nodos iniciales de prueba
 		Node D= new Node(3);
-		Node E= new Node(4);
-		Node F= new Node(5);
-		Node G= new Node(6);
+	//	Node E= new Node(4);
+	//	Node F= new Node(5);
+	//	Node G= new Node(6);
 		
 		A.addEdge(new Edge (A,B));
 		A.addEdge(new Edge (A,C));
 		A.addEdge(new Edge (A,D));
 		B.addEdge(new Edge (B,C));
-		B.addEdge(new Edge (B,F));
+//		B.addEdge(new Edge (B,F));
 		C.addEdge(new Edge (C,B));
-		C.addEdge(new Edge (C,F));                 
-		C.addEdge(new Edge (C,G));
-		C.addEdge(new Edge (C,E));
-		D.addEdge(new Edge (D,E));
-		E.addEdge(new Edge (E,G));
-		E.addEdge(new Edge (E,C));
-		F.addEdge(new Edge (F,C));
-		F.addEdge(new Edge (F,G));
+//		C.addEdge(new Edge (C,F));                 
+//		C.addEdge(new Edge (C,G));
+	//	C.addEdge(new Edge (C,E));
+//		D.addEdge(new Edge (D,E));
+//		E.addEdge(new Edge (E,G));
+//		E.addEdge(new Edge (E,C));
+//		F.addEdge(new Edge (F,C));
+//		F.addEdge(new Edge (F,G));
 		
-        graph.addNode(A);
-        graph.addNode(B);
-        graph.addNode(C);
-        graph.addNode(D);
-        graph.addNode(E);
-        graph.addNode(F);
-        graph.addNode(G);
+//        entidad a= new Boss(6,30);   
+//		G.setEntidad(a);                     
 		
-        entidad a= new Boss(1,30);   
-		G.setEntidad(a);                     
-		
-		entidad p= new Pokebolas(2,numeroAleatorio(5,10));                                     
-		E.setEntidad(p);     
+//		entidad p= new Pokebolas(4,numeroAleatorio(5,10));                                     
+//		F.setEntidad(p);     
         
-		entidad w= new Enemigos(3,numeroAleatorio(1,3));         //asigno enemigo id 3 con numero aleatorio entre 5 y 10                             
+		entidad w= new Enemigos(2,numeroAleatorio(1,3));         //asigno enemigo id 3 con numero aleatorio entre 5 y 10                             
+		entidad w1= new Enemigos(3,numeroAleatorio(1,3)); 
+		entidad w2= new Enemigos(1,numeroAleatorio(1,3)); 
 		
 		C.setEntidad(w);     
-		D.setEntidad(w);
-		B.setEntidad(w);
+		D.setEntidad(w1);
+		B.setEntidad(w2);
 		
 		
 		energiaPokemon=numeroAleatorio(10,20);
+		energiaInicial=energiaPokemon;
 		posicion=0;									//Seteo la posicion del pokemon
 		cicloPercepcion=0;
 		bossDerrotado = false;
 		
-		poderEspecial.set(0, false);
-		poderEspecial.set(1, false);
-		poderEspecial.set(2, false);
+		poderEspecial.add(false);
+		poderEspecial.add(false);
+		poderEspecial.add(false);
+		
+		graph.addNode(A);
+        graph.addNode(B);
+        graph.addNode(C);
+        graph.addNode(D);
+        
+        tiempoPoderEspecial.add(0);
+		tiempoPoderEspecial.add(0);
+		tiempoPoderEspecial.add(0);
+        
+        System.out.print("Se creo el mapa");
+  //      graph.addNode(E);
+   //     graph.addNode(F);
+   //     graph.addNode(G);
 	}	
 	
 	public Graph getGraph() {
 		return graph;
+	}
+	public void setGraph(Graph graph) {
+		this.graph=graph;
 	}
 	
 	public Integer getEnergiaPokemon() {
@@ -158,6 +173,22 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	public void setPoderEspecial(List<Boolean> poderEspecial) {
 		this.poderEspecial = poderEspecial;
+	}
+
+	public Integer getEnergiaInicial() {
+		return energiaInicial;
+	}
+
+	public void setEnergiaInicial(Integer energiaInicial) {
+		this.energiaInicial = energiaInicial;
+	}
+	
+	public List<Integer> getTiempoPoderEspecial() {
+		return tiempoPoderEspecial;
+	}
+
+	public void setTiempoPoderEspecial(List<Integer> tiempoPoderEspecial) {
+		this.tiempoPoderEspecial = tiempoPoderEspecial;
 	}
 
 }

@@ -6,13 +6,17 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import estructura.*;
 
 public class Ambiente extends Environment {
 
-	private EstadoAmbiente a;
 	
 public Ambiente() {
 		
@@ -28,16 +32,18 @@ public EstadoAmbiente getEstadoAmbiente() {
 	@Override
 	public Perception getPercept() {
 		
-		//Antes de pasar la percepcion, actualizamos el movimiento de los enemigos
-		if(a.getCicloPercepcion()%3==0) {             //Setear de forma random entre 1 y 3 luego de las pruebas
-		a.getEstadoAmbiente().actualizarEnemigos();
-		}
+		EstadoAmbiente a=this.getEstadoAmbiente();
 		
 		PokemonPerception perception = new PokemonPerception();
 
+		//Antes de pasar la percepcion, actualizamos el movimiento de los enemigos
+		
 		//Le paso su ubicacion
 		perception.setPosicion(a.getPosicion());
 		
+		if(a.getCicloPercepcion()%3==0) {             //Setear de forma random entre 1 y 3 luego de las pruebas
+			a.getEstadoAmbiente().actualizarEnemigos();
+			} 
 		//Su energia
 		perception.setEnergiaActual(a.getEnergiaPokemon());
 		
@@ -51,6 +57,25 @@ public EstadoAmbiente getEstadoAmbiente() {
 	if(a.getCicloPercepcion()%5==0) {	
 		perception.setUbicaciones(obtenerUbicaciones(a.getGraph()));          
 	} 
+	 List<Boolean> listaPoder = a.getPoderEspecial();
+	
+		if(((125*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
+			 listaPoder.set(0, true);
+		}
+		
+		if(((175*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
+			listaPoder.set(1, true);
+		}
+		
+		if(((220*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
+			listaPoder.set(2, true); 
+		}
+		
+		perception.setPoderEspecial(listaPoder);
+	
+		perception.setPoderEspecial(a.getPoderEspecial());
+		
+		perception.setTiempoPoderEspecial(a.getTiempoPoderEspecial());
 		// TODO Auto-generated method stub
 		return perception;
 	}
@@ -70,9 +95,13 @@ public EstadoAmbiente getEstadoAmbiente() {
 	public List<Node> obtenerUbicaciones(Graph graph){
 		List<Node> nodes = graph.getNodes();
 		//Tengo que devolver solo la ubicacion y que entidad esta alli, borro su energia
-	    for (Node node : nodes) {
+		try {
+		for (Node node : nodes) {
 	    	node.getEntidad().setEnergia(0);
 	    }    
+		} catch (Exception e) {
+			System.out.println("Esta vacio el nodo");
+        }
 	    return nodes;
 	}
 	
@@ -82,7 +111,7 @@ public EstadoAmbiente getEstadoAmbiente() {
 		 List<Node> nodos=this.getEstadoAmbiente().getGraph().getNodes();
 		 boolean existePokebola=true;
 		 for (Node objeto : nodos) {
-			 if(objeto.getEntidad().getClass()==Pokebolas.class) {
+			 if(objeto.getEntidad().equals(Pokebolas.class)) {
 				 existePokebola=false;                     //Mientras exista pokebola en el mapa el agente puede seguir
 			 }
 		 }
@@ -103,7 +132,7 @@ public EstadoAmbiente getEstadoAmbiente() {
 		if(this.getEstadoAmbiente().getPoderEspecial().get(2)) {
 			cantidadMaxEnergia+= (int) Math.ceil(cantidadMaxEnergia*0.5);
 		}
-		
+		System.out.print("Agente falla?");
 		//El agente falla cuando se queda sin energia o cuando no existen mas pokebolas para recolectar y no logro derrotar al boss
 		//con la energia actual + los ataques especiales (Lo calculo para el mejor caso que tuviera los 3 ataques especiales)
 		 return (cantidadEnergiaPokemon<=0 || ((cantidadEnergiaBoss>cantidadMaxEnergia) && existePokebola)); 
