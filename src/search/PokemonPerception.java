@@ -20,9 +20,10 @@ public class PokemonPerception extends Perception {
 	private List<Boolean> PoderEspecial;
 	private List<Node> adyacentes;
 	private List<Node> ubicacionesSatelite;
+	private boolean bossDerrotado;
 	
 	
-	
+	 
 	public PokemonPerception() {
 		
 	}
@@ -103,5 +104,13 @@ public class PokemonPerception extends Perception {
 
 	public void setPoderEspecial(List<Boolean> poderEspecial) {
 		PoderEspecial = poderEspecial;
+	}
+
+	public boolean isBossDerrotado() {
+		return bossDerrotado;
+	}
+
+	public void setBossDerrotado(boolean bossDerrotado) {
+		this.bossDerrotado = bossDerrotado;
 	}
 }

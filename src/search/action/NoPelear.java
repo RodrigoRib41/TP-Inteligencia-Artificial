@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import estructura.Edge;
 import estructura.Node;
+import estructura.entidades;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
@@ -28,10 +29,10 @@ EstadoPokemon estado= (EstadoPokemon) s;
 		//probar
 		Node nodoElegido=posiblesNodos.get(0);
 		
-		int valorMinimo = posiblesNodos.get(0).getEntidad().getEnergia();
+		int valorMinimo = posiblesNodos.get(0).getEnergia();
 		for (Node objeto : posiblesNodos) {
-		    if (objeto.getEntidad().getEnergia() < valorMinimo) {
-		        valorMinimo = objeto.getEntidad().getEnergia();
+		    if (objeto.getEnergia() < valorMinimo) {
+		        valorMinimo = objeto.getEnergia();
 		        nodoElegido = objeto;
 		    }
 		}
@@ -44,7 +45,7 @@ EstadoPokemon estado= (EstadoPokemon) s;
 				 
 		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 				 
-		estado.setEnergiaActual(estado.getEnergiaActual()-(nodoElegido.getEntidad().getEnergia())/4);
+		estado.setEnergiaActual(estado.getEnergiaActual()-(nodoElegido.getEnergia())/4);
 		// TODO Auto-generated method stub
 		}
 		return estado;
@@ -66,13 +67,13 @@ public List<Node> obtenerAdyacentes(Node node){
 		
 		List<Node> posiblesNodos= new ArrayList<>();
 	    for (Node adyacen : node) {
-	    	if (adyacen.getEntidad().equals(entidades.Enemigos.class)) {
+	    	if (adyacen.getEntidad().equals(entidades.ENEMIGO)) {
 	    		posiblesNodos.add(adyacen);
 	    	}
 	    }
 	    return posiblesNodos;
 	}
-
+ 
 	@Override
 	public Double getCost() {
 		// TODO Auto-generated method stub

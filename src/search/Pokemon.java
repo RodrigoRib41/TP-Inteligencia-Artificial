@@ -28,7 +28,7 @@ public class Pokemon extends SearchBasedAgent{
 			Vector<SearchAction> acciones = new Vector<SearchAction>();
 		//	acciones.addElement(new Moverse());
 		// 	acciones.addElement(new NoPelear());
-			acciones.addElement(new Pelear());
+			acciones.addElement(new Pelear()); 
 		//	acciones.addElement(new RecolectarPokebola());
 			
 			Problem problema =new Problem(objetivo,estado,acciones);

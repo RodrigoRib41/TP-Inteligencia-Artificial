@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import estructura.*;
-import entidades.*;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.state.EnvironmentState;
 
@@ -30,10 +29,10 @@ public class EstadoAmbiente extends EnvironmentState {
 	public void initState() {
 		// GENERAR MAPA INICIALMENTE CON LA ESTRUCTURA DE GRAFO
 		Node A= new Node(0);
-		Node B= new Node(1);
+		Node B= new Node(1); 
 		Node C= new Node(2);               //Nodos iniciales de prueba
 		Node D= new Node(3);
-	//	Node E= new Node(4);
+		Node E= new Node(4);
 	//	Node F= new Node(5);
 	//	Node G= new Node(6);
 		
@@ -58,13 +57,16 @@ public class EstadoAmbiente extends EnvironmentState {
 //		entidad p= new Pokebolas(4,numeroAleatorio(5,10));                                     
 //		F.setEntidad(p);     
         
-		entidad w= new Enemigos(2,numeroAleatorio(1,3));         //asigno enemigo id 3 con numero aleatorio entre 5 y 10                             
-		entidad w1= new Enemigos(3,numeroAleatorio(1,3)); 
-		entidad w2= new Enemigos(1,numeroAleatorio(1,3)); 
+	//	B.addEdge(new Edge (B,E));
 		
-		C.setEntidad(w);     
-		D.setEntidad(w1);
-		B.setEntidad(w2);
+		C.setEnergia(30);
+		C.setEntidad(entidades.BOSS);
+	//	C.setEnergia(10);
+	//	C.setEntidad(entidades.ENEMIGO);     
+		D.setEnergia(10);
+		D.setEntidad(entidades.ENEMIGO); 
+		B.setEnergia(10);
+		B.setEntidad(entidades.ENEMIGO);
 		
 		
 		energiaPokemon=numeroAleatorio(10,20);
@@ -86,7 +88,7 @@ public class EstadoAmbiente extends EnvironmentState {
 		tiempoPoderEspecial.add(0);
 		tiempoPoderEspecial.add(0);
         
-        System.out.print("Se creo el mapa");
+        System.out.print(C.getEnergia());
   //      graph.addNode(E);
    //     graph.addNode(F);
    //     graph.addNode(G);

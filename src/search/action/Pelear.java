@@ -1,14 +1,12 @@
 package search.action;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
-import entidades.Enemigos;
 import estructura.Edge;
 import estructura.Graph;
 import estructura.Node;
+import estructura.entidades;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
@@ -24,24 +22,28 @@ public class Pelear extends SearchAction {
 		EstadoPokemon estado= (EstadoPokemon) s;
 		
 		List<Node> adyacentes=estado.getAdyacentes();
-		
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
-		
-		//probar
+		System.out.print(posiblesNodos.get(1).getEntidad().toString());
 	//	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo no pelear
-
+		Node boss=new Node(1);
+		boss.setEntidad(entidades.BOSS);
+		posiblesNodos.contains(boss);
+		boss=posiblesNodos.stream().filter(objeto -> objeto.getEntidad().equals(entidades.BOSS)).findFirst().orElse(null);
+		
+		
+		System.out.print(boss.getEnergia());
 		Node nodoElegido=posiblesNodos.get(0);
 	
-	//	int valorMinimo = posiblesNodos.get(0).getEntidad().getEnergia();
-	//	for (Node objeto : posiblesNodos) {
-	//	    if (objeto.getEntidad().getEnergia() < valorMinimo) {
-	//	        valorMinimo = objeto.getEntidad().getEnergia();
-	//	        nodoElegido = objeto;
-	//	    }
-	//	}
+		int valorMinimo = posiblesNodos.get(0).getEnergia();
+		for (Node objeto : posiblesNodos) {
+		    if (objeto.getEnergia() < valorMinimo) {
+		        valorMinimo = objeto.getEnergia();
+		        nodoElegido = objeto;
+		    }
+		}
 		
 		
-		
+		estado.setBossDerrotado(true);
 		 estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
 		 estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
 		 
@@ -51,7 +53,7 @@ public class Pelear extends SearchAction {
 		 obtenerEspeciales(listaPoder,listaTiempo);
 		 
 		 System.out.print(nodoElegido.getEntidad().toString());
-		 Integer porcentajeEnergia=(nodoElegido.getEntidad().getEnergia()*100)/estado.getEnergiaActual();
+		 Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
 		 
 		 List<Integer> tiempo=estado.getTiempoPoderEspecial();
 		 usarEspecial(porcentajeEnergia, listaPoder, tiempo);   //Devolvemos en listaPoder los poderes a utilizar
@@ -72,13 +74,13 @@ public class Pelear extends SearchAction {
 			 energiaPoder=(int) (energiaActual*0.5+1);
 		 }
 		
-		 if(energiaPoder>nodoElegido.getEntidad().getEnergia()) {
+		 if(energiaPoder>nodoElegido.getEnergia()) {
 			 
-			 energiaActual+=(int)(nodoElegido.getEntidad().getEnergia())*0.2;
+			 energiaActual+=(int)(nodoElegido.getEnergia())*0.2;
 		 }
 		 
 		 else {
-			 energiaActual+=energiaPoder-(nodoElegido.getEntidad().getEnergia())*0.2;
+			 energiaActual+=energiaPoder-(nodoElegido.getEnergia())*0.2;
 		 }
 		 
 		
@@ -86,6 +88,7 @@ public class Pelear extends SearchAction {
 		 estado.setEnergiaActual(energiaActual);
 		 estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		 estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
+		 
 		// TODO Auto-generated method stub
 	//	}
 		return estado;
@@ -139,7 +142,10 @@ public class Pelear extends SearchAction {
 		
 		List<Node> posiblesNodos= new ArrayList<>();
 	    for (Node adyacen : node) {
-	    	if (adyacen.getEntidad().getClass().equals(Enemigos.class)) {
+	    	if (adyacen.getEntidad()==entidades.ENEMIGO) {
+	    		posiblesNodos.add(adyacen);
+	    	}
+	    	if (adyacen.getEntidad()==entidades.BOSS) {
 	    		posiblesNodos.add(adyacen);
 	    	}
 	    }
@@ -176,9 +182,10 @@ public class Pelear extends SearchAction {
 		ambiente.setPoderEspecial(estado.getPoderEspecial());
 		
 		Graph aux=ambiente.getGraph();
-		
 		Integer indice=estado.getPosicion();
-		aux.getNodes().get(indice).setEntidad(null);
+		
+		
+		aux.getNodes().get(indice).setEntidad(entidades.VACIO);
 		
 		ambiente.setGraph(aux);
 		

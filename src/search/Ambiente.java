@@ -1,22 +1,15 @@
 package search;
-import entidades.*;
-
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 import estructura.*;
 
 public class Ambiente extends Environment {
-
+ 
 	
 public Ambiente() {
 		
@@ -49,10 +42,15 @@ public EstadoAmbiente getEstadoAmbiente() {
 		
 		//La cantidad de enemigos
 		perception.setCantidadEnemigos(a.getCantidadEnemigos());
-	
+		
+		perception.setBossDerrotado(a.isBossDerrotado());
+		
 		//Al tener los adyacentes ya sabe la energia de cualquier entidad que tenga de adyacente
 		Integer posicion=a.getPosicion();
-		perception.setAdyacentes(obtenerAdyacentes(a.getGraph().getNodes().get(posicion)));  
+		
+		List<Node> adyacentes = obtenerAdyacentes(a.getGraph().getNodes().get(posicion));
+		perception.setAdyacentes(adyacentes);  
+		
 			
 	if(a.getCicloPercepcion()%5==0) {	
 		perception.setUbicaciones(obtenerUbicaciones(a.getGraph()));          
@@ -72,8 +70,7 @@ public EstadoAmbiente getEstadoAmbiente() {
 		}
 		
 		perception.setPoderEspecial(listaPoder);
-	
-		perception.setPoderEspecial(a.getPoderEspecial());
+		
 		
 		perception.setTiempoPoderEspecial(a.getTiempoPoderEspecial());
 		// TODO Auto-generated method stub
@@ -97,7 +94,7 @@ public EstadoAmbiente getEstadoAmbiente() {
 		//Tengo que devolver solo la ubicacion y que entidad esta alli, borro su energia
 		try {
 		for (Node node : nodes) {
-	    	node.getEntidad().setEnergia(0);
+	    	node.setEnergia(0);
 	    }    
 		} catch (Exception e) {
 			System.out.println("Esta vacio el nodo");
@@ -111,7 +108,7 @@ public EstadoAmbiente getEstadoAmbiente() {
 		 List<Node> nodos=this.getEstadoAmbiente().getGraph().getNodes();
 		 boolean existePokebola=true;
 		 for (Node objeto : nodos) {
-			 if(objeto.getEntidad().equals(Pokebolas.class)) {
+			 if(objeto.getEntidad().equals(entidades.POKEBOLA)) {
 				 existePokebola=false;                     //Mientras exista pokebola en el mapa el agente puede seguir
 			 }
 		 }

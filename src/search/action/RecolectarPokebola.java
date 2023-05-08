@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import entidades.*;
 import estructura.Edge;
 import estructura.Graph;
 import estructura.Node;
+import estructura.entidades;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
@@ -36,7 +36,7 @@ public class RecolectarPokebola extends SearchAction{
 		 List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 		 estado.setTiempoPoderEspecial(tiempo);
 		 
-		 estado.setEnergiaActual(estado.getEnergiaActual()+nodoElegido.getEntidad().getEnergia());  //Tomo la energia de la pokebola y la sumo
+		 estado.setEnergiaActual(estado.getEnergiaActual()+nodoElegido.getEnergia());  //Tomo la energia de la pokebola y la sumo
 		 estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		}
 		// TODO Auto-generated method stub
@@ -47,7 +47,7 @@ public List<Node> obtenerPokebolas(List<Node> node){
 		
 		List<Node> posiblesNodos= new ArrayList<>();
 	    for (Node adyacen : node) {
-	    	if (adyacen.getEntidad().equals(entidades.Pokebolas.class)) {  //nose si funca
+	    	if (adyacen.getEntidad().equals(entidades.POKEBOLA)) {  //nose si funca
 	    		posiblesNodos.add(adyacen);
 	    	}
 	    }
@@ -88,13 +88,13 @@ public List<Node> obtenerAdyacentes(Node node){
 		
 		ambiente.setGraph(aux);
 		
-		return ambiente;
+		return ambiente; 
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Recolectar Pokebola";
+		return "Recolectar Pokebola"; 
 	}
 
 }

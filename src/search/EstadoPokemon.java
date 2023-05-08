@@ -1,12 +1,8 @@
 package search;
 
-import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import entidades.Enemigos;
-import entidades.entidad;
 import estructura.Edge;
 import estructura.Node;
 import frsf.cidisi.faia.agent.Perception;
@@ -252,9 +248,5 @@ public List<Node> obtenerAdyacentes(Node node){
 	public void setPoderEspecial(List<Boolean> poderEspecial) {
 		PoderEspecial = poderEspecial;
 	}
-
-
-
-	
 
 }
