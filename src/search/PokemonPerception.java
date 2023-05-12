@@ -1,5 +1,6 @@
 package search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +26,10 @@ public class PokemonPerception extends Perception {
 	
 	 
 	public PokemonPerception() {
+		adyacentes=new ArrayList<Node>();
+		ubicacionesSatelite=new ArrayList<Node>();
+		tiempoPoderEspecial=new ArrayList<Integer>();
+		PoderEspecial=new ArrayList<Boolean>();
 		
 	}
 	

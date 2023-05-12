@@ -87,6 +87,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		this.setPoderEspecial(percepcion.getPoderEspecial());
 		this.setPosicion(percepcion.getPosicion());
 		this.setTiempoPoderEspecial(percepcion.getTiempoPoderEspecial());
+		this.setBossDerrotado(percepcion.isBossDerrotado());
 		
 		//percepcion.getUbicaciones();				Ver de hacer la busqueda del boss en todos los nodos y devolver su ubicacion
 		this.setUbicacionBoss(ubicacionBoss);

@@ -43,9 +43,10 @@ public class EstadoAmbiente extends EnvironmentState {
 		B.addEdge(new Edge (B,E));
 		B.addEdge(new Edge (B,F));
 		C.addEdge(new Edge (C,G));
-		C.addEdge(new Edge (D,G));                 
-		C.addEdge(new Edge (E,G));
-		C.addEdge(new Edge (F,G));
+		D.addEdge(new Edge (D,G));                 
+		E.addEdge(new Edge (E,G));
+		F.addEdge(new Edge (F,G));
+		
 //		D.addEdge(new Edge (D,E));
 //		E.addEdge(new Edge (E,G));
 //		E.addEdge(new Edge (E,C));
@@ -61,7 +62,7 @@ public class EstadoAmbiente extends EnvironmentState {
 	//	B.addEdge(new Edge (B,E));
 		
 	//	C.setEnergia(30);
-		G.setEntidad(entidades.BOSS);
+		G.setEntidad(entidades.VACIO);
 	//	C.setEnergia(10);
 	//	C.setEntidad(entidades.ENEMIGO);     
 	//	A.setEnergia(10);
@@ -80,7 +81,7 @@ public class EstadoAmbiente extends EnvironmentState {
 		energiaInicial=energiaPokemon;
 		posicion=0;									//Seteo la posicion del pokemon
 		cicloPercepcion=0;
-		bossDerrotado = true;
+		bossDerrotado = false;
 		
 		poderEspecial.add(false);
 		poderEspecial.add(false);
