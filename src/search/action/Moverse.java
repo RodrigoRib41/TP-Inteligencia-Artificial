@@ -34,9 +34,10 @@ public class Moverse extends SearchAction{
 		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 		estado.setTiempoPoderEspecial(tiempo);
 		estado.setBossDerrotado(true);
+		return estado;
 		}
 		// TODO Auto-generated method stub
-		return estado;
+		return null;
 	}
 
 	@Override
@@ -65,16 +66,19 @@ public class Moverse extends SearchAction{
 		estado.setTiempoPoderEspecial(tiempo);
 		estado.setBossDerrotado(true);
 		
-		ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
 		ambiente.setBossDerrotado(false);
+		ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
 		ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		List<Integer> tiempo2 = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 		ambiente.setTiempoPoderEspecial(tiempo2);
 		ambiente.setPosicion(estado.getPosicion());
+		System.out.print("Me muevo al nodo " + nodoElegido.getId());
+		System.out.print("/nTiene de adyacentes " + obtenerAdyacentes(nodoElegido));
+		return ambiente;
 		}
 		
 		// TODO Auto-generated method stub
-		return ambiente;
+		return null;
 	}
 
 	@Override

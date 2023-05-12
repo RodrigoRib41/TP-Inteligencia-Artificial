@@ -41,16 +41,12 @@ public class EstadoPokemon extends SearchBasedAgentState {
 
 		if (this.getCantidadEnemigos() == pokemon.getCantidadEnemigos() 
 				&& this.getPosicion()== pokemon.getPosicion() 
-				&& this.getCantidadEnergiaBoss()==pokemon.getCantidadEnergiaBoss() 
-				&& this.getCicloPercepcion()== pokemon.getCicloPercepcion()  
 				&& this.getEnergiaActual()== pokemon.getEnergiaActual()
 				&& this.getEnergiaInicial()== pokemon.getEnergiaInicial()
 	// falla nose xq			&& this.getTiempoPoderEspecial().equals(pokemon.getTiempoPoderEspecial())
-				&& this.getUbicacionBoss()==pokemon.getUbicacionBoss()
 				&& this.getAdyacentes().equals(pokemon.getAdyacentes())
-				&& this.getPoderEspecial().equals(pokemon.getPoderEspecial())
 				&& this.isBossDerrotado()==pokemon.isBossDerrotado()
-				&& this.isObjetivoFinal()==pokemon.isObjetivoFinal()
+		
 				)
 				 {
 		return true;
@@ -102,8 +98,12 @@ public class EstadoPokemon extends SearchBasedAgentState {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+	     String str = "";
+	        str = str + " posicion=\"(" + getPosicion() + ")\"";
+	        str = str + " energy=\"" + getEnergiaActual() + "\"\n";
+	        str = str + "poder especial habilitado=\"[ " +  this.getPoderEspecial() +" ] \n";
+	        str = str + "tiempo poder especial=\"[ " +  this.getTiempoPoderEspecial() +" ] \n";
+	        return str;
 	}
 
 	@Override

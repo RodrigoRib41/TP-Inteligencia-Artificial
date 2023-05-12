@@ -20,7 +20,7 @@ public class Graph {
  
     @Override
     public String toString() {
-        return "Graph [nodes=" + nodes + "]";
+        return "Mapa [Nodos=" + nodes + "]";
     }
  
 }

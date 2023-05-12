@@ -64,17 +64,23 @@ public class EstadoAmbiente extends EnvironmentState {
 		G.setEntidad(entidades.BOSS);
 	//	C.setEnergia(10);
 	//	C.setEntidad(entidades.ENEMIGO);     
-		D.setEnergia(10);
-		D.setEntidad(entidades.ENEMIGO); 
-		B.setEnergia(10);
-		B.setEntidad(entidades.ENEMIGO);
+	//	A.setEnergia(10);
+		A.setEntidad(entidades.VACIO);
+		B.setEntidad(entidades.VACIO); 
+		C.setEntidad(entidades.VACIO); 
+		D.setEntidad(entidades.VACIO); 
+		E.setEntidad(entidades.VACIO); 
 		
 		
-		energiaPokemon=numeroAleatorio(10,20);
+	//	B.setEnergia(10);
+		F.setEntidad(entidades.VACIO);
+		
+		
+		energiaPokemon=20;
 		energiaInicial=energiaPokemon;
 		posicion=0;									//Seteo la posicion del pokemon
 		cicloPercepcion=0;
-		bossDerrotado = false;
+		bossDerrotado = true;
 		
 		poderEspecial.add(false);
 		poderEspecial.add(false);
@@ -84,12 +90,15 @@ public class EstadoAmbiente extends EnvironmentState {
         graph.addNode(B);
         graph.addNode(C);
         graph.addNode(D);
+        graph.addNode(E);
+        graph.addNode(F);
+        graph.addNode(G);
         
         tiempoPoderEspecial.add(0);
 		tiempoPoderEspecial.add(0);
 		tiempoPoderEspecial.add(0);
         
-        System.out.print(C.getEnergia());
+    
   //      graph.addNode(E);
    //     graph.addNode(F);
    //     graph.addNode(G);
@@ -139,9 +148,13 @@ public class EstadoAmbiente extends EnvironmentState {
 		return (int) (Math.random() * rango) + min;
 	}
 	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString() { 
+		String str = "";
+		str = str + "Energia Pokemon: "+ this.getEnergiaPokemon() + " Cant. Enemigos: " + this.getCantidadEnemigos() + " Ubicacion BOSS: " + this.getUbicacionBoss() + "\n";
+        str = str + "[ \n";
+        str = str + this.getGraph();
+        str = str + " ]\n";
+		return str;
 	}
 
 	public Integer getPosicion() {

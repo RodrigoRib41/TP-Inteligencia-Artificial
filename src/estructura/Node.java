@@ -33,7 +33,7 @@ public class Node {
 	 
 	    @Override
 	    public String toString() {
-	        return "\nNode [Ubicacion=" + id + ",  Energia="+ energia +", Posibles destinos=" + edges + "]";
+	        return "\n   Nodo [Ubicacion=" + id + ",  Energia="+ energia +",  Entidad=" + this.getEntidad() + "  Posibles destinos=" + edges + "]";
 	    }
 
 		

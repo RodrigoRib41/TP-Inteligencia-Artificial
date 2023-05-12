@@ -108,7 +108,29 @@ public EstadoAmbiente getEstadoAmbiente() {
 	
 	@Override
 	 public boolean agentFailed(Action actionReturned) {
-		 List<Node> nodos=this.getEstadoAmbiente().getGraph().getNodes();
+		
+		
+		List<Node> nodos=obtenerLibres(this.getEstadoAmbiente().getAdyacentes());
+		boolean puedoMoverme=true;
+		if(nodos.size()==0) {
+		puedoMoverme=false;
+		
+		}
+		return puedoMoverme;
+		
+	}
+	
+public List<Node> obtenerLibres(List<Node> node){
+		
+		List<Node> posiblesNodos= new ArrayList<>();
+	    for (Node adyacen : node) {
+	    	if (adyacen.getEntidad()==entidades.VACIO) {
+	    		posiblesNodos.add(adyacen);
+	    	}
+	    }
+	    return posiblesNodos;
+	}
+	/*	 List<Node> nodos=this.getEstadoAmbiente().getGraph().getNodes();
 		 boolean existePokebola=true;
 		 for (Node objeto : nodos) {
 			 if(objeto.getEntidad().equals(entidades.POKEBOLA)) {
@@ -136,8 +158,9 @@ public EstadoAmbiente getEstadoAmbiente() {
 		//El agente falla cuando se queda sin energia o cuando no existen mas pokebolas para recolectar y no logro derrotar al boss
 		//con la energia actual + los ataques especiales (Lo calculo para el mejor caso que tuviera los 3 ataques especiales)
 		 return (cantidadEnergiaPokemon<=0 || ((cantidadEnergiaBoss>cantidadMaxEnergia) && existePokebola)); 
-	 }
+	 }*/
 	
+		
 	
 }
 

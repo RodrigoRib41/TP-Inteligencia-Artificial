@@ -29,7 +29,7 @@ public class Edge {
 	 
 	    @Override
 	    public String toString() {
-	        return "\n Edge [origin=" + origin.getId() + ", destination=" + destination.getId()+ "]";
+	        return "\n        -> [" + destination.getId()+ "]";
 	    }
 	}
 	
