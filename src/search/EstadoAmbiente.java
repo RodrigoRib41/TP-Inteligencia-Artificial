@@ -13,7 +13,8 @@ public class EstadoAmbiente extends EnvironmentState {
 	private Integer energiaInicial;
 	private List<Boolean> poderEspecial=new ArrayList<>();
 	private List<Integer> tiempoPoderEspecial=new ArrayList<Integer>(3);
-
+	private List<Node> adyacentes=new ArrayList<Node>();
+	private Integer ubicacionBoss;
 	private Integer posicion;
 	private Integer energiaBoss;
 	private Integer cantidadEnemigos;
@@ -33,18 +34,18 @@ public class EstadoAmbiente extends EnvironmentState {
 		Node C= new Node(2);               //Nodos iniciales de prueba
 		Node D= new Node(3);
 		Node E= new Node(4);
-	//	Node F= new Node(5);
-	//	Node G= new Node(6);
+		Node F= new Node(5);
+		Node G= new Node(6);
 		
 		A.addEdge(new Edge (A,B));
 		A.addEdge(new Edge (A,C));
 		A.addEdge(new Edge (A,D));
-		B.addEdge(new Edge (B,C));
-//		B.addEdge(new Edge (B,F));
-		C.addEdge(new Edge (C,B));
-//		C.addEdge(new Edge (C,F));                 
-//		C.addEdge(new Edge (C,G));
-	//	C.addEdge(new Edge (C,E));
+		B.addEdge(new Edge (B,E));
+		B.addEdge(new Edge (B,F));
+		C.addEdge(new Edge (C,G));
+		C.addEdge(new Edge (D,G));                 
+		C.addEdge(new Edge (E,G));
+		C.addEdge(new Edge (F,G));
 //		D.addEdge(new Edge (D,E));
 //		E.addEdge(new Edge (E,G));
 //		E.addEdge(new Edge (E,C));
@@ -59,8 +60,8 @@ public class EstadoAmbiente extends EnvironmentState {
         
 	//	B.addEdge(new Edge (B,E));
 		
-		C.setEnergia(30);
-		C.setEntidad(entidades.BOSS);
+	//	C.setEnergia(30);
+		G.setEntidad(entidades.BOSS);
 	//	C.setEnergia(10);
 	//	C.setEntidad(entidades.ENEMIGO);     
 		D.setEnergia(10);
@@ -191,6 +192,22 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	public void setTiempoPoderEspecial(List<Integer> tiempoPoderEspecial) {
 		this.tiempoPoderEspecial = tiempoPoderEspecial;
+	}
+
+	public List<Node> getAdyacentes() {
+		return adyacentes;
+	}
+
+	public void setAdyacentes(List<Node> adyacentes) {
+		this.adyacentes = adyacentes;
+	}
+
+	public Integer getUbicacionBoss() {
+		return ubicacionBoss;
+	}
+
+	public void setUbicacionBoss(Integer ubicacionBoss) {
+		this.ubicacionBoss = ubicacionBoss;
 	}
 
 }

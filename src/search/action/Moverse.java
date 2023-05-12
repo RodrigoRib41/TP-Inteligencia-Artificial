@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.*;
 import estructura.Edge;
 import estructura.Node;
+import estructura.entidades;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import frsf.cidisi.faia.state.AgentState;
@@ -20,23 +21,69 @@ public class Moverse extends SearchAction{
 		EstadoPokemon estado= (EstadoPokemon) s;
 		
 		List<Node> adyacentes=estado.getAdyacentes();
-		
 		List<Node> posiblesNodos=obtenerLibres(adyacentes);
+		
 		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo moverme
 		Random rand = new Random();
-		Node nodoElegido=posiblesNodos.get(rand.nextInt(posiblesNodos.size()));   //Tomo cualquier camino posible
 		
-		 estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
-		 estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
-		 estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
-		 List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
-		 estado.setTiempoPoderEspecial(tiempo);
+		Node nodoElegido=posiblesNodos.get(0);   //Tomo cualquier camino posible
+		
+		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
+		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
+		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
+		estado.setTiempoPoderEspecial(tiempo);
+		estado.setBossDerrotado(true);
 		}
 		// TODO Auto-generated method stub
 		return estado;
 	}
-	
-	public List<Node> obtenerAdyacentes(Node node){
+
+	@Override
+	public Double getCost() {
+		// TODO Auto-generated method stub
+		return 1.0;
+	}
+
+	@Override
+	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
+		EstadoPokemon estado= (EstadoPokemon) ast;
+		EstadoAmbiente ambiente= (EstadoAmbiente)est;
+		
+		List<Node> adyacentes=estado.getAdyacentes();
+		List<Node> posiblesNodos=obtenerLibres(adyacentes);
+		
+		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo moverme
+		Random rand = new Random();
+		
+		Node nodoElegido=posiblesNodos.get(0);   //Tomo cualquier camino posible
+		
+		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
+		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
+		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
+		estado.setTiempoPoderEspecial(tiempo);
+		estado.setBossDerrotado(true);
+		
+		ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
+		ambiente.setBossDerrotado(false);
+		ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		List<Integer> tiempo2 = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
+		ambiente.setTiempoPoderEspecial(tiempo2);
+		ambiente.setPosicion(estado.getPosicion());
+		}
+		
+		// TODO Auto-generated method stub
+		return ambiente;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Moverse";
+	}
+
+public List<Node> obtenerAdyacentes(Node node){
 		
 		List<Node> nodosAdyacentes = new ArrayList<>();
 	    List<Edge> edges = node.getEdges();
@@ -52,35 +99,10 @@ public class Moverse extends SearchAction{
 		
 		List<Node> posiblesNodos= new ArrayList<>();
 	    for (Node adyacen : node) {
-	    	if (adyacen.getEntidad()==null) {
+	    	if (adyacen.getEntidad()==entidades.VACIO) {
 	    		posiblesNodos.add(adyacen);
 	    	}
 	    }
 	    return posiblesNodos;
 	}
-
-	@Override
-	public Double getCost() {
-		// TODO Auto-generated method stub
-		return 1.0;
-	}
-
-	@Override
-	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-		EstadoPokemon estado= (EstadoPokemon) ast;
-		EstadoAmbiente ambiente= (EstadoAmbiente)est;
-		
-		ambiente.setPosicion(estado.getPosicion());
-		ambiente.setCicloPercepcion(estado.getCicloPercepcion());
-		
-		// TODO Auto-generated method stub
-		return ambiente;
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Moverse";
-	}
-
 }

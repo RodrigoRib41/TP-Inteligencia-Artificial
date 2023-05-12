@@ -22,6 +22,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 	private boolean bossDerrotado;
 	private List<Node> adyacentes=new ArrayList<Node>();
 	private Integer cicloPercepcion;
+	private boolean objetivoFinal;
 	
 
 	public EstadoPokemon() {
@@ -49,6 +50,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 				&& this.getAdyacentes().equals(pokemon.getAdyacentes())
 				&& this.getPoderEspecial().equals(pokemon.getPoderEspecial())
 				&& this.isBossDerrotado()==pokemon.isBossDerrotado()
+				&& this.isObjetivoFinal()==pokemon.isObjetivoFinal()
 				)
 				 {
 		return true;
@@ -73,6 +75,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		nuevoEstado.setUbicacionBoss(this.getUbicacionBoss());   //ver de implementar
 		nuevoEstado.setCicloPercepcion(this.getCicloPercepcion());
 		nuevoEstado.setBossDerrotado(this.isBossDerrotado());
+		nuevoEstado.setObjetivoFinal(this.isObjetivoFinal());
 		// TODO Auto-generated method stub
 		return nuevoEstado;
 	}
@@ -108,7 +111,6 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		
 		
 		bossDerrotado = false;
-		bossDerrotado=false;
 		cicloPercepcion=0;
 		
 		
@@ -247,6 +249,18 @@ public List<Node> obtenerAdyacentes(Node node){
 
 	public void setPoderEspecial(List<Boolean> poderEspecial) {
 		PoderEspecial = poderEspecial;
+	}
+
+
+
+	public boolean isObjetivoFinal() {
+		return objetivoFinal;
+	}
+
+
+
+	public void setObjetivoFinal(boolean objetivoFinal) {
+		this.objetivoFinal = objetivoFinal;
 	}
 
 }

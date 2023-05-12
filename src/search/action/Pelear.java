@@ -19,48 +19,195 @@ public class Pelear extends SearchAction {
 	
 	@Override
 	public SearchBasedAgentState execute(SearchBasedAgentState s) {
+		EstadoPokemon aux=(EstadoPokemon) s;
 		EstadoPokemon estado= (EstadoPokemon) s;
+		
 		
 		List<Node> adyacentes=estado.getAdyacentes();
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
-		System.out.print(posiblesNodos.get(1).getEntidad().toString());
-	//	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo no pelear
+		List<Boolean> listaPoder = estado.getPoderEspecial();
+		List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
+		obtenerEspeciales(listaPoder,listaTiempo); //Obtengo en listaPoder los poderes que puedo utilizar
+		Node nodoElegido=posiblesNodos.get(0);
+	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo pelear
 		Node boss=new Node(1);
 		boss.setEntidad(entidades.BOSS);
-		posiblesNodos.contains(boss);
-		boss=posiblesNodos.stream().filter(objeto -> objeto.getEntidad().equals(entidades.BOSS)).findFirst().orElse(null);
+		if(posiblesNodos.contains(boss) && puedoDerrotar(estado,nodoElegido,listaPoder)) {
+		nodoElegido=posiblesNodos.stream().filter(objeto -> objeto.getEntidad().equals(entidades.BOSS)).findFirst().orElse(null);
+		Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
+		 
+		usarEspecial(porcentajeEnergia, listaPoder, listaTiempo);   //Devolvemos en listaPoder los poderes a utilizar
+																	//Se setea en 0 la listaTiempo de los poderes utilizados
+																	//Y se le suma +1 al tiempo de los poderes no utilizados
+		Integer energiaActual=estado.getEnergiaActual();
+		actualizarEnergia(nodoElegido,energiaActual, listaPoder);
 		
+		estado.setEnergiaActual(energiaActual);
+		estado.setTiempoPoderEspecial(listaTiempo);
+		estado.setBossDerrotado(true);								//Condicion de victoria
+		estado.setPosicion(nodoElegido.getId());				
+		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
+		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
+		 
+		return estado;
 		
-		System.out.print(boss.getEnergia());
-		Node nodoElegido=posiblesNodos.get(0);
-	
-		int valorMinimo = posiblesNodos.get(0).getEnergia();
-		for (Node objeto : posiblesNodos) {
-		    if (objeto.getEnergia() < valorMinimo) {
-		        valorMinimo = objeto.getEnergia();
-		        nodoElegido = objeto;
-		    }
 		}
+		else{
+			int valorMinimo = posiblesNodos.get(0).getEnergia();
+			for (Node objeto : posiblesNodos) {
+			    if (objeto.getEnergia() < valorMinimo) {					//Si no tengo boss, busco el enemigo con menos energia
+			        valorMinimo = objeto.getEnergia();
+			        nodoElegido = objeto;
+			    }
+			}
+			
+			if(puedoDerrotar(estado,nodoElegido,listaPoder)) {			//Si puedo derrotarlo
+				Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
+			 
+				usarEspecial(porcentajeEnergia, listaPoder, listaTiempo);   //Devolvemos en listaPoder los poderes a utilizar
+																			//Se setea en 0 la listaTiempo de los poderes utilizados
+																			//Y se le suma +1 al tiempo de los poderes no utilizados
+				Integer energiaActual=estado.getEnergiaActual();
+				actualizarEnergia(nodoElegido,energiaActual, listaPoder);
+				
+				estado.setEnergiaActual(energiaActual);
+				estado.setTiempoPoderEspecial(listaTiempo);
+				estado.setBossDerrotado(true);								//Condicion de victoria
+				estado.setPosicion(nodoElegido.getId());				
+				estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
+				estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+				estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
+				 
+				return estado;
+				
+			}
+			else {
+				return aux;
+			}
+		}
+	
+	}
+	else
+		return aux;
+	
+	}
+	
+	
+	@Override
+	public Double getCost() {
+		// TODO Auto-generated method stub
+		return 1.5;
+	}
+
+	@Override
+	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
+		EstadoPokemon estado= (EstadoPokemon) ast;
+		EstadoAmbiente ambiente= (EstadoAmbiente)est;
 		
 		
-		estado.setBossDerrotado(true);
-		 estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
-		 estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
+		List<Node> adyacentes=estado.getAdyacentes();
+		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
+		List<Boolean> listaPoder = estado.getPoderEspecial();
+		List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
+		obtenerEspeciales(listaPoder,listaTiempo); //Obtengo en listaPoder los poderes que puedo utilizar
+		Node nodoElegido=posiblesNodos.get(0);
+	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo pelear
+		Node boss=new Node(1);
+		boss.setEntidad(entidades.BOSS);
+		if(posiblesNodos.contains(boss)) {
+			if(puedoDerrotar(estado,nodoElegido,listaPoder)) {
+		nodoElegido=posiblesNodos.stream().filter(objeto -> objeto.getEntidad().equals(entidades.BOSS)).findFirst().orElse(null);
+		Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
 		 
+		usarEspecial(porcentajeEnergia, listaPoder, listaTiempo);   //Devolvemos en listaPoder los poderes a utilizar
+																	//Se setea en 0 la listaTiempo de los poderes utilizados
+																	//Y se le suma +1 al tiempo de los poderes no utilizados
+		Integer energiaActual=estado.getEnergiaActual();
+		actualizarEnergia(nodoElegido,energiaActual, listaPoder);
 		
-		 List<Boolean> listaPoder = estado.getPoderEspecial();
-		 List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
-		 obtenerEspeciales(listaPoder,listaTiempo);
+		ambiente.setEnergiaPokemon(energiaActual);
+		ambiente.setTiempoPoderEspecial(listaTiempo);
+		ambiente.setBossDerrotado(true);								//Condicion de victoria
+		ambiente.setPosicion(nodoElegido.getId());				
+		ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
+		ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		ambiente.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
 		 
-		 System.out.print(nodoElegido.getEntidad().toString());
-		 Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
+		return ambiente;
+			}
+			else{
+			ambiente.setEnergiaBoss(nodoElegido.getEnergia());		//Si no puedo vencer al boss pero lo tengo adyacente,
+			ambiente.setUbicacionBoss(nodoElegido.getId());			//Guardo su ubicacion y energia
+		}}
+		
+		
+			int valorMinimo = posiblesNodos.get(0).getEnergia();
+			for (Node objeto : posiblesNodos) {
+			    if (objeto.getEnergia() < valorMinimo) {					//Si no tengo boss, sigue al ejecucion
+			        valorMinimo = objeto.getEnergia();						//busco el enemigo con menos energia
+			        nodoElegido = objeto;
+			    }
+			}
+			
+			if(puedoDerrotar(estado,nodoElegido,listaPoder)) {			//Si puedo derrotarlo
+				Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
+			 
+				usarEspecial(porcentajeEnergia, listaPoder, listaTiempo);   //Devolvemos en listaPoder los poderes a utilizar
+																			//Se setea en 0 la listaTiempo de los poderes utilizados
+																			//Y se le suma +1 al tiempo de los poderes no utilizados
+				Integer energiaActual=estado.getEnergiaActual();
+				actualizarEnergia(nodoElegido,energiaActual, listaPoder);
+				
+				ambiente.setEnergiaPokemon(energiaActual);
+				ambiente.setTiempoPoderEspecial(listaTiempo);
+				ambiente.setBossDerrotado(false);								//Condicion de victoria
+				ambiente.setPosicion(nodoElegido.getId());				
+				ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
+				ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
+				ambiente.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
+				 
+				return ambiente;
+				
+			}
+		}
+	return ambiente;
+	
+	}
+	
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Pelear";
+	}
+	private void actualizarEnergia(Node nodoElegido, Integer energiaActual, List<Boolean> listaPoder) {
+		 int energiaPoder=0;
+		 if(listaPoder.get(0)) {
+			 energiaPoder+=(int) (energiaActual*0.2+1);  //Redondeo hacia arriba, por eso el +1
+		 }
 		 
-		 List<Integer> tiempo=estado.getTiempoPoderEspecial();
-		 usarEspecial(porcentajeEnergia, listaPoder, tiempo);   //Devolvemos en listaPoder los poderes a utilizar
-		 estado.setTiempoPoderEspecial(tiempo);    //Seteo el tiempo del poder especial actualizado
+		 if(listaPoder.get(1)) {
+			 energiaPoder+=(int) (energiaActual*0.3+1);
+		 }
+
+		 if(listaPoder.get(2)) {
+			 energiaPoder+=(int) (energiaActual*0.5+1);
+		 }
+		
+		 if(energiaPoder>nodoElegido.getEnergia()) {		//Si lo derroto solo con el escudo del poder especial
+			 
+			 energiaActual+=(int)(nodoElegido.getEnergia()*0.2+1);		//Sumo a mi energia el 20% de la energia del enemigo
+		 }
 		 
-		 
-		 int energiaActual=estado.getEnergiaActual();
+		 else {		             //Si no lo derroto solo con el escudo, la energia faltante la resto de la energia actual
+			 energiaActual+=energiaPoder-(int)(nodoElegido.getEnergia()*0.2+1);
+		 }
+		
+	}
+
+	private boolean puedoDerrotar(EstadoPokemon estado, Node nodoElegido, List<Boolean> listaPoder) {
+		int energiaActual=estado.getEnergiaActual();
 		 int energiaPoder=0;
 		 if(listaPoder.get(0)) {
 			 energiaPoder=(int) (energiaActual*0.2+1);
@@ -69,31 +216,20 @@ public class Pelear extends SearchAction {
 		 if(listaPoder.get(1)) {
 			 energiaPoder=(int) (energiaActual*0.3+1);
 		 }
- 
+
 		 if(listaPoder.get(2)) {
 			 energiaPoder=(int) (energiaActual*0.5+1);
 		 }
 		
 		 if(energiaPoder>nodoElegido.getEnergia()) {
-			 
-			 energiaActual+=(int)(nodoElegido.getEnergia())*0.2;
+			 return true;
 		 }
-		 
 		 else {
-			 energiaActual+=energiaPoder-(nodoElegido.getEnergia())*0.2;
+			 return false;
 		 }
-		 
-		
-		 
-		 estado.setEnergiaActual(energiaActual);
-		 estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
-		 estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
-		 
-		// TODO Auto-generated method stub
-	//	}
-		return estado;
+
 	}
-	
+
 	private void usarEspecial(Integer porcentajeEnergia, List<Boolean> listaPoder, List<Integer> tiempo) {
 	Integer aux=porcentajeEnergia;
 	
@@ -164,38 +300,4 @@ public class Pelear extends SearchAction {
 		 }
 		return listaPoder;
 	}
-	@Override
-	public Double getCost() {
-		// TODO Auto-generated method stub
-		return 1.5;
-	}
-
-	@Override
-	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-		EstadoPokemon estado= (EstadoPokemon) ast;
-		EstadoAmbiente ambiente= (EstadoAmbiente)est;
-		
-		ambiente.setPosicion(estado.getPosicion());
-		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
-		ambiente.setCicloPercepcion(estado.getCicloPercepcion());
-		ambiente.setCantidadEnemigos(estado.getCantidadEnemigos());
-		ambiente.setPoderEspecial(estado.getPoderEspecial());
-		
-		Graph aux=ambiente.getGraph();
-		Integer indice=estado.getPosicion();
-		
-		
-		aux.getNodes().get(indice).setEntidad(entidades.VACIO);
-		
-		ambiente.setGraph(aux);
-		
-		return ambiente;
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Pelear";
-	}
-
 }

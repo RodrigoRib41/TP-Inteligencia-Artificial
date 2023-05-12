@@ -90,16 +90,19 @@ public EstadoAmbiente getEstadoAmbiente() {
 	
 	
 	public List<Node> obtenerUbicaciones(Graph graph){
-		List<Node> nodes = graph.getNodes();
+		List<Node> nodes = new ArrayList<Node>();
+		List<Node> aux = new ArrayList<Node>();
+		nodes = graph.getNodes();
+		aux=nodes;
 		//Tengo que devolver solo la ubicacion y que entidad esta alli, borro su energia
 		try {
 		for (Node node : nodes) {
-	    	node.setEnergia(0);
+	    	((Node) aux).setEnergia(0);
 	    }    
 		} catch (Exception e) {
 			System.out.println("Esta vacio el nodo");
         }
-	    return nodes;
+	    return aux;
 	}
 	
 	

@@ -26,10 +26,12 @@ public class Pokemon extends SearchBasedAgent{
 			this.setAgentState(estado);
 	
 			Vector<SearchAction> acciones = new Vector<SearchAction>();
-		//	acciones.addElement(new Moverse());
+//			acciones.addElement(new RecolectarPokebola());
+			acciones.addElement(new Moverse());
+		//	acciones.addElement(new Pelear()); 
 		// 	acciones.addElement(new NoPelear());
-			acciones.addElement(new Pelear()); 
-		//	acciones.addElement(new RecolectarPokebola());
+			
+		
 			
 			Problem problema =new Problem(objetivo,estado,acciones);
 			     
@@ -48,8 +50,8 @@ public class Pokemon extends SearchBasedAgent{
 	@Override
 	public Action selectAction() {
 		
-	//	BreathFirstSearch estrategia = new BreathFirstSearch ();
-     UniformCostSearch estrategia= new UniformCostSearch(new CostFunction());
+		BreathFirstSearch estrategia = new BreathFirstSearch ();
+    // UniformCostSearch estrategia= new UniformCostSearch(new CostFunction());
       // AStarSearch estrategia = new AStarSearch(new CostFunction(), new Heuristic());
 		
 		Search searchSolver = new Search(estrategia);
