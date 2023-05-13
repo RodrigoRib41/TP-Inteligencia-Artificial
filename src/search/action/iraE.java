@@ -53,7 +53,7 @@ public class iraE extends SearchAction{
 			estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 			List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 			estado.setTiempoPoderEspecial(tiempo);
-			estado.setBossDerrotado(true);
+			estado.setBossDerrotado(false);
 			
 			ambiente.setBossDerrotado(false);
 			ambiente.setCicloPercepcion(ambiente.getCicloPercepcion()+1);

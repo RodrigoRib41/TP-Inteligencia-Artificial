@@ -19,17 +19,18 @@ public class Pelear extends SearchAction {
 	
 	@Override
 	public SearchBasedAgentState execute(SearchBasedAgentState s) {
-		EstadoPokemon aux=(EstadoPokemon) s;
+		
 		EstadoPokemon estado= (EstadoPokemon) s;
 		
-		
 		List<Node> adyacentes=estado.getAdyacentes();
+		
+		System.out.print(estado.getPosicion());
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
 		List<Boolean> listaPoder = estado.getPoderEspecial();
 		List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
 		obtenerEspeciales(listaPoder,listaTiempo); //Obtengo en listaPoder los poderes que puedo utilizar
-		Node nodoElegido=posiblesNodos.get(0);
 	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo pelear
+		Node nodoElegido=posiblesNodos.get(0);
 		Node boss=new Node(1);
 		boss.setEntidad(entidades.BOSS);
 		if(posiblesNodos.contains(boss) && puedoDerrotar(estado,nodoElegido,listaPoder)) {
@@ -46,7 +47,6 @@ public class Pelear extends SearchAction {
 		estado.setTiempoPoderEspecial(listaTiempo);
 		estado.setBossDerrotado(true);								//Condicion de victoria
 		estado.setPosicion(nodoElegido.getId());				
-		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
 		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
 		 
@@ -83,13 +83,12 @@ public class Pelear extends SearchAction {
 				
 			}
 			else {
-				return aux;
+				return estado;
 			}
 		}
 	
 	}
-	else
-		return aux;
+	return estado;
 	
 	}
 	
@@ -126,19 +125,26 @@ public class Pelear extends SearchAction {
 		Integer energiaActual=estado.getEnergiaActual();
 		actualizarEnergia(nodoElegido,energiaActual, listaPoder);
 		
+		estado.setEnergiaActual(energiaActual);
+		estado.setTiempoPoderEspecial(listaTiempo);
+		estado.setBossDerrotado(true);								//Condicion de victoria
+		estado.setPosicion(nodoElegido.getId());				
+		
+		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
+		
 		ambiente.setEnergiaPokemon(energiaActual);
 		ambiente.setTiempoPoderEspecial(listaTiempo);
 		ambiente.setBossDerrotado(true);								//Condicion de victoria
 		ambiente.setPosicion(nodoElegido.getId());				
-		ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
 		ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		ambiente.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
-		 
+		System.out.print("Energia despues de derrorar al boss" +estado.getEnergiaActual());
 		return ambiente;
 			}
 			else{
 			ambiente.setEnergiaBoss(nodoElegido.getEnergia());		//Si no puedo vencer al boss pero lo tengo adyacente,
-			ambiente.setUbicacionBoss(nodoElegido.getId());			//Guardo su ubicacion y energia
+			ambiente.setUbicacionBoss(nodoElegido.getId());			//Guardo su ubicacion y energia  VER DESPUES
 		}}
 		
 		
@@ -159,6 +165,14 @@ public class Pelear extends SearchAction {
 				Integer energiaActual=estado.getEnergiaActual();
 				actualizarEnergia(nodoElegido,energiaActual, listaPoder);
 				
+				estado.setEnergiaActual(energiaActual);
+				estado.setTiempoPoderEspecial(listaTiempo);
+				estado.setBossDerrotado(false);								//Condicion de victoria
+				estado.setPosicion(nodoElegido.getId());				
+				estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
+				estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+				estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
+				
 				ambiente.setEnergiaPokemon(energiaActual);
 				ambiente.setTiempoPoderEspecial(listaTiempo);
 				ambiente.setBossDerrotado(false);								//Condicion de victoria
@@ -166,6 +180,7 @@ public class Pelear extends SearchAction {
 				ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
 				ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
 				ambiente.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
+				 System.out.print(nodoElegido.getId());
 				 
 				return ambiente;
 				
@@ -179,7 +194,8 @@ public class Pelear extends SearchAction {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Pelear";
+		
+		return "Pelear ";
 	}
 	private void actualizarEnergia(Node nodoElegido, Integer energiaActual, List<Boolean> listaPoder) {
 		 int energiaPoder=0;

@@ -45,7 +45,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 				&& this.getEnergiaInicial()== pokemon.getEnergiaInicial()
 	// falla nose xq			&& this.getTiempoPoderEspecial().equals(pokemon.getTiempoPoderEspecial())
 				&& this.getAdyacentes().equals(pokemon.getAdyacentes())
-				&& this.isBossDerrotado()==pokemon.isBossDerrotado()
+		//		&& this.isBossDerrotado()==pokemon.isBossDerrotado()
 		
 				)
 				 {

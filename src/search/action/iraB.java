@@ -48,13 +48,13 @@ public class iraB extends SearchAction{
 		List<Node> adyacentes=estado.getAdyacentes();
 		List<Node> posiblesNodos=obtenerDestino(adyacentes);
 		
-	//	if(posiblesNodos.size()>0) {
+		if(posiblesNodos.size()>0) {
 			Node nodoElegido=posiblesNodos.get(0); 
 			estado.setPosicion(nodoElegido.getId());
 			estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 			List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 			estado.setTiempoPoderEspecial(tiempo);
-			estado.setBossDerrotado(true);
+			estado.setBossDerrotado(false);
 			
 			ambiente.setBossDerrotado(false);
 			ambiente.setCicloPercepcion(ambiente.getCicloPercepcion()+1);
@@ -66,15 +66,15 @@ public class iraB extends SearchAction{
 			
 			return ambiente;
 			
-	//	}
+		}
 		// TODO Auto-generated method stub
-	//	return null;
+		return null;
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return null;
+		return "iraB";
 	}
 	
 public List<Node> obtenerAdyacentes(Node node){

@@ -36,6 +36,8 @@ public class EstadoAmbiente extends EnvironmentState {
 		Node E= new Node(4);
 		Node F= new Node(5);
 		Node G= new Node(6);
+		Node H= new Node(7);
+	
 		
 		A.addEdge(new Edge (A,B));
 		A.addEdge(new Edge (A,C));
@@ -46,6 +48,7 @@ public class EstadoAmbiente extends EnvironmentState {
 		D.addEdge(new Edge (D,G));                 
 		E.addEdge(new Edge (E,G));
 		F.addEdge(new Edge (F,G));
+		G.addEdge(new Edge (G,H));
 		
 //		D.addEdge(new Edge (D,E));
 //		E.addEdge(new Edge (E,G));
@@ -62,7 +65,8 @@ public class EstadoAmbiente extends EnvironmentState {
 	//	B.addEdge(new Edge (B,E));
 		
 	//	C.setEnergia(30);
-		G.setEntidad(entidades.VACIO);
+		G.setEntidad(entidades.ENEMIGO);
+		G.setEnergia(20);
 	//	C.setEnergia(10);
 	//	C.setEntidad(entidades.ENEMIGO);     
 	//	A.setEnergia(10);
@@ -70,9 +74,12 @@ public class EstadoAmbiente extends EnvironmentState {
 		B.setEntidad(entidades.VACIO); 
 		C.setEntidad(entidades.VACIO); 
 		D.setEntidad(entidades.VACIO); 
-		E.setEntidad(entidades.VACIO); 
-	//	B.setEnergia(10);
+		E.setEntidad(entidades.POKEBOLA); 
+		E.setEnergia(200);
 		F.setEntidad(entidades.VACIO);
+		
+		H.setEntidad(entidades.BOSS);
+		H.setEnergia(60);
 		
 		
 		energiaPokemon=20;
@@ -80,6 +87,7 @@ public class EstadoAmbiente extends EnvironmentState {
 		posicion=0;									//Seteo la posicion del pokemon
 		cicloPercepcion=0;
 		bossDerrotado = false;
+		cantidadEnemigos=1;
 		
 		poderEspecial.add(false);
 		poderEspecial.add(false);
@@ -92,6 +100,7 @@ public class EstadoAmbiente extends EnvironmentState {
         graph.addNode(E);
         graph.addNode(F);
         graph.addNode(G);
+        graph.addNode(H);
         
         tiempoPoderEspecial.add(0);
 		tiempoPoderEspecial.add(0);

@@ -26,13 +26,13 @@ public class Pokemon extends SearchBasedAgent{
 			this.setAgentState(estado);
 	
 			Vector<SearchAction> acciones = new Vector<SearchAction>();
-//			acciones.addElement(new RecolectarPokebola());
-		//	acciones.addElement(new Moverse());
+			acciones.addElement(new RecolectarPokebola());
+			acciones.addElement(new Moverse());
 			//acciones.addElement(new iraA());
-			acciones.addElement(new iraB());
-			acciones.addElement(new iraE());
-			acciones.addElement(new iraG());
-		//	acciones.addElement(new Pelear()); 
+		//	acciones.addElement(new iraB());
+		//	acciones.addElement(new iraE());
+		//	acciones.addElement(new iraG());
+			acciones.addElement(new Pelear()); 
 		// 	acciones.addElement(new NoPelear());
 			
 		

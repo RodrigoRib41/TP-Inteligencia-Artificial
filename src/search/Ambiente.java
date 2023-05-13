@@ -52,9 +52,9 @@ public EstadoAmbiente getEstadoAmbiente() {
 		perception.setAdyacentes(adyacentes);  
 		
 			
-	if(a.getCicloPercepcion()%5==0) {	
-		perception.setUbicaciones(obtenerUbicaciones(a.getGraph()));          
-	} 
+	//if(a.getCicloPercepcion()%5==0) {	
+//		perception.setUbicaciones(obtenerUbicaciones(a.getGraph()));          
+	//} 
 	 List<Boolean> listaPoder = a.getPoderEspecial();
 	
 		if(((125*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
@@ -112,11 +112,11 @@ public EstadoAmbiente getEstadoAmbiente() {
 		
 		
 		List<Node> nodos=obtenerLibres(this.getEstadoAmbiente().getAdyacentes());
-		boolean puedoMoverme=true;
-		if(nodos.size()==0) {
-		puedoMoverme=false;
+		boolean puedoMoverme=false;
+	//	if(nodos.size()==0) {
+		//puedoMoverme=true;
 		
-		}
+	//	}
 		return puedoMoverme;
 		
 	}

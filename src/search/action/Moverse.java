@@ -64,8 +64,12 @@ public class Moverse extends SearchAction{
 		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 		estado.setTiempoPoderEspecial(tiempo);
-		estado.setBossDerrotado(true);
-		
+	//	if(nodoElegido.getId()==6) {
+	//	estado.setBossDerrotado(true);
+	//	}
+	//	else {
+			estado.setBossDerrotado(false);
+	//	}
 		ambiente.setBossDerrotado(false);
 	//	ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
 		ambiente.setCicloPercepcion(ambiente.getCicloPercepcion()+1);
