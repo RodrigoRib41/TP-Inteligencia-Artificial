@@ -85,6 +85,7 @@ public EstadoAmbiente getEstadoAmbiente() {
 	        Node adyacentes = edge.getDestination(); 
 	        nodosAdyacentes.add(adyacentes);
 	    }
+	    
 	    return nodosAdyacentes;
 	}
 	

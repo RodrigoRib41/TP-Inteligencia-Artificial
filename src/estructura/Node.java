@@ -8,7 +8,11 @@ public class Node {
 	  private Integer energia;
 	  private List<Edge> edges;   //Arista
 	 
-	    public Node(Integer id) {
+	    public void setEdges(List<Edge> edges) {
+		this.edges = edges;
+	}
+
+		public Node(Integer id) {
 	        this.id = id;
 	    } 
 	 

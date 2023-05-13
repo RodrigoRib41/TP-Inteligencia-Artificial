@@ -71,8 +71,6 @@ public class EstadoAmbiente extends EnvironmentState {
 		C.setEntidad(entidades.VACIO); 
 		D.setEntidad(entidades.VACIO); 
 		E.setEntidad(entidades.VACIO); 
-		
-		
 	//	B.setEnergia(10);
 		F.setEntidad(entidades.VACIO);
 		

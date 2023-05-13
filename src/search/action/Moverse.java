@@ -29,7 +29,7 @@ public class Moverse extends SearchAction{
 		Node nodoElegido=posiblesNodos.get(0);   //Tomo cualquier camino posible
 		
 		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
-		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
+	//	estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
 		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 		estado.setTiempoPoderEspecial(tiempo);
@@ -37,7 +37,7 @@ public class Moverse extends SearchAction{
 		return estado;
 		}
 		// TODO Auto-generated method stub
-		return null;
+		return estado;
 	}
 
 	@Override
@@ -60,25 +60,25 @@ public class Moverse extends SearchAction{
 		Node nodoElegido=posiblesNodos.get(0);   //Tomo cualquier camino posible
 		
 		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
-		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
+	//	estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
 		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 		estado.setTiempoPoderEspecial(tiempo);
 		estado.setBossDerrotado(true);
 		
 		ambiente.setBossDerrotado(false);
-		ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
-		ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
+	//	ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
+		ambiente.setCicloPercepcion(ambiente.getCicloPercepcion()+1);
 		List<Integer> tiempo2 = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
 		ambiente.setTiempoPoderEspecial(tiempo2);
 		ambiente.setPosicion(estado.getPosicion());
 		System.out.print("Me muevo al nodo " + nodoElegido.getId());
-		System.out.print("/nTiene de adyacentes " + obtenerAdyacentes(nodoElegido));
+	//	System.out.print("/nTiene de adyacentes " + obtenerAdyacentes(nodoElegido));
 		return ambiente;
 		}
 		
 		// TODO Auto-generated method stub
-		return null;
+		return ambiente;
 	}
 
 	@Override

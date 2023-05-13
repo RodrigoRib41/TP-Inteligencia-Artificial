@@ -71,7 +71,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		nuevoEstado.setUbicacionBoss(this.getUbicacionBoss());   //ver de implementar
 		nuevoEstado.setCicloPercepcion(this.getCicloPercepcion());
 		nuevoEstado.setBossDerrotado(this.isBossDerrotado());
-		nuevoEstado.setObjetivoFinal(this.isObjetivoFinal());
+		
 		// TODO Auto-generated method stub
 		return nuevoEstado;
 	}
@@ -90,7 +90,7 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		this.setBossDerrotado(percepcion.isBossDerrotado());
 		
 		//percepcion.getUbicaciones();				Ver de hacer la busqueda del boss en todos los nodos y devolver su ubicacion
-		this.setUbicacionBoss(ubicacionBoss);
+	//	this.setUbicacionBoss(ubicacionBoss);
 		//percepcion.getTiempoSatelite()			Quizas no es necesario que el agente lo sepa
 		
 		// TODO Auto-generated method stub
@@ -113,12 +113,8 @@ public class EstadoPokemon extends SearchBasedAgentState {
 		
 		bossDerrotado = false;
 		cicloPercepcion=0;
-		
-		
-		
 	
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 		
 	}
 	
