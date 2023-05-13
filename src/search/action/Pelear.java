@@ -54,14 +54,12 @@ public class Pelear extends SearchAction {
 		
 		}
 		else{
-			int valorMinimo = posiblesNodos.get(0).getEnergia();
 			for (Node objeto : posiblesNodos) {
-			    if (objeto.getEnergia() < valorMinimo) {					//Si no tengo boss, busco el enemigo con menos energia
-			        valorMinimo = objeto.getEnergia();
+			    if (objeto.getEnergia() < nodoElegido.getEnergia()) {		//Si no hay boss, busco el menor enemigo de menor energia
 			        nodoElegido = objeto;
 			    }
-			}
-			
+			} 
+		
 			if(puedoDerrotar(estado,nodoElegido,listaPoder)) {			//Si puedo derrotarlo
 				Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
 			 
@@ -78,7 +76,7 @@ public class Pelear extends SearchAction {
 				estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
 				estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 				estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
-				 
+				
 				return estado;
 				
 			}
@@ -173,6 +171,7 @@ public class Pelear extends SearchAction {
 				estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 				estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
 				
+				ambiente.getGraph().getNodes().get(estado.getPosicion()).setEntidad(entidades.VACIO);
 				ambiente.setEnergiaPokemon(energiaActual);
 				ambiente.setTiempoPoderEspecial(listaTiempo);
 				ambiente.setBossDerrotado(false);								//Condicion de victoria
@@ -225,19 +224,20 @@ public class Pelear extends SearchAction {
 	private boolean puedoDerrotar(EstadoPokemon estado, Node nodoElegido, List<Boolean> listaPoder) {
 		int energiaActual=estado.getEnergiaActual();
 		 int energiaPoder=0;
+		 
 		 if(listaPoder.get(0)) {
-			 energiaPoder=(int) (energiaActual*0.2+1);
+			 energiaPoder+=(int) ((energiaActual*0.2)+1);
 		 }
 		 
 		 if(listaPoder.get(1)) {
-			 energiaPoder=(int) (energiaActual*0.3+1);
+			 energiaPoder+=(int) ((energiaActual*0.3)+1);
 		 }
 
 		 if(listaPoder.get(2)) {
-			 energiaPoder=(int) (energiaActual*0.5+1);
+			 energiaPoder+=(int) ((energiaActual*0.5)+1);
 		 }
 		
-		 if(energiaPoder>nodoElegido.getEnergia()) {
+		 if(energiaPoder+energiaActual>nodoElegido.getEnergia()) {
 			 return true;
 		 }
 		 else {

@@ -79,7 +79,7 @@ public class RecolectarPokebola extends SearchAction{
 		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
 		ambiente.setCicloPercepcion(estado.getCicloPercepcion());
 		ambiente.setPoderEspecial(estado.getPoderEspecial());
-		ambiente.getGraph().getNodes().get(4).setEntidad(entidades.VACIO);
+		ambiente.getGraph().getNodes().get(estado.getPosicion()).setEntidad(entidades.VACIO);
 		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
 		estado.setBossDerrotado(false);
 		

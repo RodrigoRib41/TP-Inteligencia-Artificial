@@ -43,12 +43,21 @@ public class EstadoAmbiente extends EnvironmentState {
 		A.addEdge(new Edge (A,C));
 		A.addEdge(new Edge (A,D));
 		B.addEdge(new Edge (B,E));
+		B.addEdge(new Edge (B,A));
 		B.addEdge(new Edge (B,F));
 		C.addEdge(new Edge (C,G));
-		D.addEdge(new Edge (D,G));                 
+		C.addEdge(new Edge (C,A));
+		D.addEdge(new Edge (D,G));    
+		D.addEdge(new Edge (D,A));   
 		E.addEdge(new Edge (E,G));
+		E.addEdge(new Edge (E,B));
 		F.addEdge(new Edge (F,G));
+		F.addEdge(new Edge (F,B));
 		G.addEdge(new Edge (G,H));
+		G.addEdge(new Edge (G,F));
+		G.addEdge(new Edge (G,E));
+		G.addEdge(new Edge (G,C));
+		G.addEdge(new Edge (G,D));
 		
 //		D.addEdge(new Edge (D,E));
 //		E.addEdge(new Edge (E,G));
@@ -71,9 +80,12 @@ public class EstadoAmbiente extends EnvironmentState {
 	//	C.setEntidad(entidades.ENEMIGO);     
 	//	A.setEnergia(10);
 		A.setEntidad(entidades.VACIO);
-		B.setEntidad(entidades.VACIO); 
-		C.setEntidad(entidades.VACIO); 
-		D.setEntidad(entidades.VACIO); 
+		B.setEntidad(entidades.ENEMIGO); 
+		B.setEnergia(20);
+		C.setEntidad(entidades.ENEMIGO); 
+		C.setEnergia(10);
+		D.setEntidad(entidades.ENEMIGO); 
+		D.setEnergia(30);
 		E.setEntidad(entidades.POKEBOLA); 
 		E.setEnergia(200);
 		F.setEntidad(entidades.VACIO);
@@ -82,12 +94,12 @@ public class EstadoAmbiente extends EnvironmentState {
 		H.setEnergia(60);
 		
 		
-		energiaPokemon=20;
+		energiaPokemon=100;
 		energiaInicial=energiaPokemon;
 		posicion=0;									//Seteo la posicion del pokemon
 		cicloPercepcion=0;
 		bossDerrotado = false;
-		cantidadEnemigos=1;
+		cantidadEnemigos=4;
 		
 		poderEspecial.add(false);
 		poderEspecial.add(false);

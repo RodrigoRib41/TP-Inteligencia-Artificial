@@ -25,18 +25,19 @@ EstadoPokemon estado= (EstadoPokemon) s;
 		List<Node> adyacentes=estado.getAdyacentes();
 		
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes);
+		
 		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo no pelear
 		//probar
 		Node nodoElegido=posiblesNodos.get(0);
 		
-		int valorMinimo = posiblesNodos.get(0).getEnergia();
 		for (Node objeto : posiblesNodos) {
-		    if (objeto.getEnergia() < valorMinimo) {
-		        valorMinimo = objeto.getEnergia();
+		    if (objeto.getEnergia() < nodoElegido.getEnergia()) {
 		        nodoElegido = objeto;
 		    }
-		}
-				
+		} 
+		//System.out.print(nodoElegido);
+		
+		if(nodoElegido.getEnergia()>estado.getEnergiaActual()) {
 		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
 		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
 				 
@@ -46,7 +47,12 @@ EstadoPokemon estado= (EstadoPokemon) s;
 		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 				 
 		estado.setEnergiaActual(estado.getEnergiaActual()-(nodoElegido.getEnergia())/4);
+
+		estado.setBossDerrotado(true);
 		// TODO Auto-generated method stub
+		return estado;
+		}
+		
 		}
 		return estado;
 	}
@@ -85,11 +91,43 @@ public List<Node> obtenerAdyacentes(Node node){
 		EstadoPokemon estado= (EstadoPokemon) ast;
 		EstadoAmbiente ambiente= (EstadoAmbiente)est;
 		
+		List<Node> adyacentes=estado.getAdyacentes();
+		List<Node> posiblesNodos=obtenerEnemigos(adyacentes);
+		
+		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo no pelear
+			Node nodoElegido=posiblesNodos.get(0);
+			
+			for (Node objeto : posiblesNodos) {
+			    if (objeto.getEnergia() < nodoElegido.getEnergia()) {
+			        nodoElegido = objeto;
+			    }
+			} 
+			
+			if(nodoElegido.getEnergia()>estado.getEnergiaActual()) {
+				estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
+				estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
+						 
+				List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
+				estado.setTiempoPoderEspecial(tiempo);
+						 
+				estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+						 
+				estado.setEnergiaActual(estado.getEnergiaActual()-(nodoElegido.getEnergia())/4);
+				
+				estado.setBossDerrotado(false);
+		
+		ambiente.setBossDerrotado(false);
 		ambiente.setPosicion(estado.getPosicion());
 		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
 		ambiente.setCicloPercepcion(estado.getCicloPercepcion());
+		ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
+		ambiente.setTiempoPoderEspecial(estado.getTiempoPoderEspecial());
+		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
 		
+		return ambiente;
 		// TODO Auto-generated method stub
+		}
+		}
 		return ambiente;
 	}
 

@@ -73,8 +73,7 @@ public class Moverse extends SearchAction{
 		ambiente.setBossDerrotado(false);
 	//	ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
 		ambiente.setCicloPercepcion(ambiente.getCicloPercepcion()+1);
-		List<Integer> tiempo2 = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
-		ambiente.setTiempoPoderEspecial(tiempo2);
+		ambiente.setTiempoPoderEspecial(tiempo);
 		ambiente.setPosicion(estado.getPosicion());
 		System.out.print("Me muevo al nodo " + nodoElegido.getId());
 	//	System.out.print("/nTiene de adyacentes " + obtenerAdyacentes(nodoElegido));

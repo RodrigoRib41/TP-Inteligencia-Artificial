@@ -110,14 +110,12 @@ public EstadoAmbiente getEstadoAmbiente() {
 	@Override
 	 public boolean agentFailed(Action actionReturned) {
 		
+		boolean AgenteFalla=false;
 		
-		List<Node> nodos=obtenerLibres(this.getEstadoAmbiente().getAdyacentes());
-		boolean puedoMoverme=false;
-	//	if(nodos.size()==0) {
-		//puedoMoverme=true;
-		
-	//	}
-		return puedoMoverme;
+		if(this.getEstadoAmbiente().getEnergiaPokemon()<0) {
+			AgenteFalla=true;
+		}
+		return AgenteFalla;
 		
 	}
 	
