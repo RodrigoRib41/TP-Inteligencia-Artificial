@@ -33,10 +33,12 @@ public EstadoAmbiente getEstadoAmbiente() {
 		
 		//Le paso su ubicacion
 		perception.setPosicion(a.getPosicion());
-		
-		if(a.getCicloPercepcion()%3==0) {             //Setear de forma random entre 1 y 3 luego de las pruebas
+	//	System.out.println("Ciclo Percepcion: "+a.getCicloPercepcion());
+		if((a.getCicloPercepcion()+1)%3==0) {             //Setear de forma random entre 1 y 3 luego de las pruebas
 			a.getEstadoAmbiente().actualizarEnemigos();
 			} 
+		
+	//	System.out.print(a.getGraph());
 		//Su energia
 		perception.setEnergiaActual(a.getEnergiaPokemon());
 		
@@ -52,28 +54,38 @@ public EstadoAmbiente getEstadoAmbiente() {
 		perception.setAdyacentes(adyacentes);  
 		
 			
-	//if(a.getCicloPercepcion()%5==0) {	
-//		perception.setUbicaciones(obtenerUbicaciones(a.getGraph()));          
-	//} 
+	if(a.getCicloPercepcion()%5==0) {	
+		perception.setUbicaciones(obtenerUbicaciones(a.getGraph()));          
+	} 
+	
 	 List<Boolean> listaPoder = a.getPoderEspecial();
-
+	 List<Integer> listaTiempo = a.getTiempoPoderEspecial();
 		if(((125*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
+			if(!listaPoder.get(0)) {
+			listaTiempo.set(0, 0);
 			 listaPoder.set(0, true);
+			}
 		}
 		
-		if(((175*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {			//No actualiza los tiempos de poder especial
-			listaPoder.set(1, true);											//Nombrar que lo obviamos por una simplificacion
-		}	
+		if(((175*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
+			if(!listaPoder.get(1)) {
+			listaPoder.set(1, true);
+			 listaTiempo.set(1, 0);
+			}
+		}
 		
 		if(((220*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
+			if(!listaPoder.get(2)) {
 			listaPoder.set(2, true); 
+			 listaTiempo.set(2, 0);
+			}
 		}
 		
 		
 		perception.setPoderEspecial(listaPoder);
 		
 		
-		perception.setTiempoPoderEspecial(a.getTiempoPoderEspecial());
+		perception.setTiempoPoderEspecial(listaTiempo);
 		// TODO Auto-generated method stub
 		return perception;
 	}
@@ -112,8 +124,11 @@ public EstadoAmbiente getEstadoAmbiente() {
 	 public boolean agentFailed(Action actionReturned) {
 		
 		boolean AgenteFalla=false;
+		boolean pokebolas=false;
+		Integer miEnergia=this.getEstadoAmbiente().getEnergiaPokemon();
+		pokebolas=this.getEstadoAmbiente().getGraph().getNodes().stream().anyMatch(nodo -> nodo.getEntidad()==entidades.POKEBOLA);
 		
-		if(this.getEstadoAmbiente().getEnergiaPokemon()<0) {
+		if(miEnergia<0 || (!pokebolas && miEnergia<this.getEstadoAmbiente().getEnergiaBoss() )) {
 			AgenteFalla=true;
 		}
 		return AgenteFalla;

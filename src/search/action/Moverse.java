@@ -24,14 +24,15 @@ public class Moverse extends SearchAction{
 		List<Node> posiblesNodos=obtenerLibres(adyacentes);
 		
 		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo moverme
-		Random rand = new Random();
-		
-		Node nodoElegido=posiblesNodos.get(0);   //Tomo cualquier camino posible
+
+		Node nodoElegido=posiblesNodos.get(0);     //rand.nextInt(posiblesNodos.size()));   //Tomo cualquier camino posible
 		
 		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
-	//	estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
+		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
 		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		
 		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
+
 		estado.setTiempoPoderEspecial(tiempo);
 		estado.setBossDerrotado(true);
 		return estado;
@@ -53,17 +54,18 @@ public class Moverse extends SearchAction{
 		
 		List<Node> adyacentes=estado.getAdyacentes();
 		List<Node> posiblesNodos=obtenerLibres(adyacentes);
-		
 		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo moverme
-		Random rand = new Random();
 		
 		Node nodoElegido=posiblesNodos.get(0);   //Tomo cualquier camino posible
 		
 		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
-	//	estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
-		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+		estado.setAdyacentes(obtenerAdyacentes(nodoElegido));	//Los nuevos nodos adyacentes
+		System.out.print("Nodo elegido: "+ estado.getPosicion());
+//		estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+	//	System.out.print("TIEMPO PODER ESPECIAL : " +estado.getTiempoPoderEspecial());
 		List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
-		estado.setTiempoPoderEspecial(tiempo);
+	//	estado.setTiempoPoderEspecial(tiempo);
+		System.out.print("TIEMPO PODER ESPECIALasfgae : " +tiempo);
 	//	if(nodoElegido.getId()==6) {
 	//	estado.setBossDerrotado(true);
 	//	}

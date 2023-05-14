@@ -26,9 +26,9 @@ public class Pelear extends SearchAction {
 		
 		System.out.print(estado.getPosicion());
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
-		List<Boolean> listaPoder = estado.getPoderEspecial();
+		List<Boolean> listaPoder2 = estado.getPoderEspecial();
 		List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
-		obtenerEspeciales(listaPoder,listaTiempo); //Obtengo en listaPoder los poderes que puedo utilizar
+		List<Boolean> listaPoder=obtenerEspeciales(listaPoder2,listaTiempo); //Obtengo en listaPoder los poderes que puedo utilizar
 	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo pelear
 		Node nodoElegido=posiblesNodos.get(0);
 		Node boss=new Node(1);
@@ -105,9 +105,10 @@ public class Pelear extends SearchAction {
 		
 		List<Node> adyacentes=estado.getAdyacentes();
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
-		List<Boolean> listaPoder = estado.getPoderEspecial();
+		List<Boolean> listaPoder2 = estado.getPoderEspecial();
 		List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
-		obtenerEspeciales(listaPoder,listaTiempo); //Obtengo en listaPoder los poderes que puedo utilizar
+		List<Boolean> listaPoder =obtenerEspeciales(listaPoder2,listaTiempo);
+		//obtenerEspeciales(listaPoder,listaTiempo); //Obtengo en listaPoder los poderes que puedo utilizar
 		Node nodoElegido=posiblesNodos.get(0);
 	if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo pelear
 		Node boss=new Node(1);
@@ -163,7 +164,7 @@ public class Pelear extends SearchAction {
 				Integer energiaActualAntes=estado.getEnergiaActual();
 				
 				Integer energiaActual=actualizarEnergia(nodoElegido,energiaActualAntes, listaPoder);
-				 
+				
 				estado.setEnergiaActual(energiaActual);
 				estado.setTiempoPoderEspecial(listaTiempo);
 				estado.setBossDerrotado(false);								//Condicion de victoria
@@ -175,7 +176,6 @@ public class Pelear extends SearchAction {
 				ambiente.getGraph().getNodes().get(estado.getPosicion()).setEntidad(entidades.VACIO);
 				ambiente.setEnergiaPokemon(energiaActual);
 				ambiente.setTiempoPoderEspecial(listaTiempo);
-				
 				ambiente.setBossDerrotado(false);								//Condicion de victoria
 				ambiente.setPosicion(nodoElegido.getId());				
 				ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
@@ -310,15 +310,19 @@ public class Pelear extends SearchAction {
 	}
 	
 	public List<Boolean> obtenerEspeciales (List<Boolean> listaPoder, List<Integer> tiempo){
-		if(tiempo.get(0)>=3) {
-			listaPoder.set(0, true);
+		List<Boolean> aux = new ArrayList<>();
+		aux.add(false);
+		aux.add(false);
+		aux.add(false);
+		if(tiempo.get(0)>=3 &&  listaPoder.get(0)) {
+			aux.set(0, true);
 		 }
-		if(tiempo.get(1)>=3) {
-			listaPoder.set(1, true);
+		if(tiempo.get(1)>=3 &&  listaPoder.get(1)) {
+			aux.set(1, true);
 		 }
-		if(tiempo.get(2)>=3) {
-			listaPoder.set(2, true);
+		if(tiempo.get(2)>=3 &&  listaPoder.get(2)) {
+			aux.set(2, true);
 		 }
-		return listaPoder;
+		return aux;
 	}
 }

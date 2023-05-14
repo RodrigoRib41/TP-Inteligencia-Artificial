@@ -86,15 +86,16 @@ public class EstadoAmbiente extends EnvironmentState {
 		C.setEnergia(10);
 		D.setEntidad(entidades.ENEMIGO); 
 		D.setEnergia(30);
-		E.setEntidad(entidades.POKEBOLA); 
+		E.setEntidad(entidades.ENEMIGO); 
 		E.setEnergia(200);
 		F.setEntidad(entidades.VACIO);
 		
 		H.setEntidad(entidades.BOSS);
-		H.setEnergia(60);
+		H.setEnergia(300);
 		
 		
-		energiaPokemon=100;
+		energiaBoss=200;
+		energiaPokemon=600;
 		energiaInicial=energiaPokemon;
 		posicion=0;									//Seteo la posicion del pokemon
 		cicloPercepcion=0;
@@ -191,8 +192,45 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	
 	public void actualizarEnemigos() {
+		
+		List<Node> nodos=graph.getNodes();
+		List<Node> noPuedoir=new ArrayList<>();
+		
+		noPuedoir.add(this.getGraph().getNodes().get(posicion));
+		
+		for(Node nodo: nodos) {
+			
+			if(nodo.getEntidad()==entidades.ENEMIGO && !noPuedoir.contains(nodo)) {
+				List<Node> adyacentes=obtenerAdyacentes(nodo);
+				for(Node ady: adyacentes) {
+					if(ady.getEntidad()==entidades.VACIO) {
+						ady.setEntidad(entidades.ENEMIGO);
+						ady.setEnergia(nodo.getEnergia());
+						noPuedoir.add(ady);
+						nodo.setEntidad(entidades.VACIO);
+						nodo.setEnergia(0);
+						break;
+					}
+				}
+				
+				
+			}
+			
+		}
 		// TODO Auto-generated method stub
 		
+	}
+	
+public List<Node> obtenerAdyacentes(Node node){
+		
+		List<Node> nodosAdyacentes = new ArrayList<>();
+	    List<Edge> edges = node.getEdges();
+	    
+	    for (Edge edge : edges) {
+	        Node adyacentes = edge.getDestination(); 
+	        nodosAdyacentes.add(adyacentes);
+	    }
+	    return nodosAdyacentes;
 	}
 
 	public Integer getCicloPercepcion() {
