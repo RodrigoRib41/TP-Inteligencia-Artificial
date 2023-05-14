@@ -122,7 +122,7 @@ public class Pelear extends SearchAction {
 																	//Y se le suma +1 al tiempo de los poderes no utilizados
 		Integer energiaActual=estado.getEnergiaActual();
 		actualizarEnergia(nodoElegido,energiaActual, listaPoder);
-		
+		System.out.print(energiaActual);
 		estado.setEnergiaActual(energiaActual);
 		estado.setTiempoPoderEspecial(listaTiempo);
 		estado.setBossDerrotado(true);								//Condicion de victoria
@@ -161,8 +161,9 @@ public class Pelear extends SearchAction {
 																			//Se setea en 0 la listaTiempo de los poderes utilizados
 																			//Y se le suma +1 al tiempo de los poderes no utilizados
 				Integer energiaActual=estado.getEnergiaActual();
+				System.out.print("ESCUDO UTILIZADO : " +energiaActual);
 				actualizarEnergia(nodoElegido,energiaActual, listaPoder);
-				
+				 System.out.print("ESCUDO UTILIZADO : " +energiaActual);
 				estado.setEnergiaActual(energiaActual);
 				estado.setTiempoPoderEspecial(listaTiempo);
 				estado.setBossDerrotado(false);								//Condicion de victoria
@@ -199,24 +200,27 @@ public class Pelear extends SearchAction {
 	private void actualizarEnergia(Node nodoElegido, Integer energiaActual, List<Boolean> listaPoder) {
 		 int energiaPoder=0;
 		 if(listaPoder.get(0)) {
-			 energiaPoder+=(int) (energiaActual*0.2+1);  //Redondeo hacia arriba, por eso el +1
+			 energiaPoder=(int) (energiaActual*0.2);  //Redondeo hacia arriba, por eso el +1
 		 }
 		 
 		 if(listaPoder.get(1)) {
-			 energiaPoder+=(int) (energiaActual*0.3+1);
+			 energiaPoder=(int) (energiaActual*0.3);
 		 }
 
 		 if(listaPoder.get(2)) {
-			 energiaPoder+=(int) (energiaActual*0.5+1);
+			 energiaPoder=(int) (energiaActual*0.5);
 		 }
 		
 		 if(energiaPoder>nodoElegido.getEnergia()) {		//Si lo derroto solo con el escudo del poder especial
-			 
-			 energiaActual+=(int)(nodoElegido.getEnergia()*0.2+1);		//Sumo a mi energia el 20% de la energia del enemigo
+			 Integer aux=Integer.valueOf((int) (nodoElegido.getEnergia()*0.2+1));
+			 energiaActual=energiaActual+aux;		//Sumo a mi energia el 20% de la energia del enemigo
+			
 		 }
 		 
 		 else {		             //Si no lo derroto solo con el escudo, la energia faltante la resto de la energia actual
-			 energiaActual+=energiaPoder-(int)(nodoElegido.getEnergia()*0.2+1);
+			 Integer aux=Integer.valueOf((int) (nodoElegido.getEnergia()*0.2+1));
+			 energiaActual=energiaActual+energiaPoder-aux;
+			 
 		 }
 		
 	}

@@ -27,7 +27,7 @@ EstadoPokemon estado= (EstadoPokemon) s;
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes);
 		
 		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo no pelear
-		//probar
+	
 		Node nodoElegido=posiblesNodos.get(0);
 		
 		for (Node objeto : posiblesNodos) {
@@ -35,7 +35,7 @@ EstadoPokemon estado= (EstadoPokemon) s;
 		        nodoElegido = objeto;
 		    }
 		} 
-		//System.out.print(nodoElegido);
+	
 		
 		if(nodoElegido.getEnergia()>estado.getEnergiaActual()) {
 		estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
@@ -63,7 +63,7 @@ public List<Node> obtenerAdyacentes(Node node){
 	    List<Edge> edges = node.getEdges();
 	    
 	    for (Edge edge : edges) {
-	        Node adyacentes = edge.getDestination(); // asumiendo que la clase Edge tiene un destino (destination)
+	        Node adyacentes = edge.getDestination(); 
 	        nodosAdyacentes.add(adyacentes);
 	    }
 	    return nodosAdyacentes;
