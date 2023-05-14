@@ -70,7 +70,7 @@ public class RecolectarPokebola extends SearchAction{
 			Node nodoElegido=posiblesNodos.get(0);
 			estado.setPosicion(nodoElegido.getId());
 			estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
-			List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
+			List<Integer> tiempo = estado.getTiempoPoderEspecial();
 			estado.setTiempoPoderEspecial(tiempo);	
 		estado.setEnergiaActual(estado.getEnergiaActual()+nodoElegido.getEnergia());
 		
@@ -81,6 +81,7 @@ public class RecolectarPokebola extends SearchAction{
 		ambiente.setPoderEspecial(estado.getPoderEspecial());
 		ambiente.getGraph().getNodes().get(estado.getPosicion()).setEntidad(entidades.VACIO);
 		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
+		ambiente.setTiempoPoderEspecial(tiempo);
 		estado.setBossDerrotado(false);
 		
 		System.out.print("Recolecto pokebola en nodo: " + nodoElegido.getId());

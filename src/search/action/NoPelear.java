@@ -107,7 +107,7 @@ public List<Node> obtenerAdyacentes(Node node){
 				estado.setPosicion(nodoElegido.getId());				//seteo la nueva posicion del agente
 				estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
 						 
-				List<Integer> tiempo = estado.getTiempoPoderEspecial().stream().map(n -> n + 1).collect(Collectors.toList());
+				List<Integer> tiempo = estado.getTiempoPoderEspecial();
 				estado.setTiempoPoderEspecial(tiempo);
 						 
 				estado.setCicloPercepcion(estado.getCicloPercepcion()+1);

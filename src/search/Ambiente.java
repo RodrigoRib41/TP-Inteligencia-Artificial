@@ -56,18 +56,19 @@ public EstadoAmbiente getEstadoAmbiente() {
 //		perception.setUbicaciones(obtenerUbicaciones(a.getGraph()));          
 	//} 
 	 List<Boolean> listaPoder = a.getPoderEspecial();
-	
+
 		if(((125*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
 			 listaPoder.set(0, true);
 		}
 		
-		if(((175*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
-			listaPoder.set(1, true);
-		}
+		if(((175*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {			//No actualiza los tiempos de poder especial
+			listaPoder.set(1, true);											//Nombrar que lo obviamos por una simplificacion
+		}	
 		
 		if(((220*a.getEnergiaInicial())/100)<=a.getEnergiaPokemon()) {
 			listaPoder.set(2, true); 
 		}
+		
 		
 		perception.setPoderEspecial(listaPoder);
 		

@@ -155,15 +155,15 @@ public class Pelear extends SearchAction {
 			}
 			
 			if(puedoDerrotar(estado,nodoElegido,listaPoder)) {			//Si puedo derrotarlo
-				Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
+			//	Integer porcentajeEnergia=(nodoElegido.getEnergia()*100)/estado.getEnergiaActual();
 			 
-				usarEspecial(porcentajeEnergia, listaPoder, listaTiempo);   //Devolvemos en listaPoder los poderes a utilizar
+			//	usarEspecial(porcentajeEnergia, listaPoder, listaTiempo);   //Devolvemos en listaPoder los poderes a utilizar
 																			//Se setea en 0 la listaTiempo de los poderes utilizados
 																			//Y se le suma +1 al tiempo de los poderes no utilizados
-				Integer energiaActual=estado.getEnergiaActual();
-				System.out.print("ESCUDO UTILIZADO : " +energiaActual);
-				actualizarEnergia(nodoElegido,energiaActual, listaPoder);
-				 System.out.print("ESCUDO UTILIZADO : " +energiaActual);
+				Integer energiaActualAntes=estado.getEnergiaActual();
+				
+				Integer energiaActual=actualizarEnergia(nodoElegido,energiaActualAntes, listaPoder);
+				 
 				estado.setEnergiaActual(energiaActual);
 				estado.setTiempoPoderEspecial(listaTiempo);
 				estado.setBossDerrotado(false);								//Condicion de victoria
@@ -175,6 +175,7 @@ public class Pelear extends SearchAction {
 				ambiente.getGraph().getNodes().get(estado.getPosicion()).setEntidad(entidades.VACIO);
 				ambiente.setEnergiaPokemon(energiaActual);
 				ambiente.setTiempoPoderEspecial(listaTiempo);
+				
 				ambiente.setBossDerrotado(false);								//Condicion de victoria
 				ambiente.setPosicion(nodoElegido.getId());				
 				ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
@@ -197,29 +198,29 @@ public class Pelear extends SearchAction {
 		
 		return "Pelear ";
 	}
-	private void actualizarEnergia(Node nodoElegido, Integer energiaActual, List<Boolean> listaPoder) {
+	private Integer actualizarEnergia(Node nodoElegido, Integer energiaActual, List<Boolean> listaPoder) {
 		 int energiaPoder=0;
 		 if(listaPoder.get(0)) {
-			 energiaPoder=(int) (energiaActual*0.2);  //Redondeo hacia arriba, por eso el +1
+			 energiaPoder+=(int) (energiaActual*0.2+1);  //Redondeo hacia arriba, por eso el +1
 		 }
 		 
 		 if(listaPoder.get(1)) {
-			 energiaPoder=(int) (energiaActual*0.3);
+			 energiaPoder+=(int) (energiaActual*0.3+1);
 		 }
 
 		 if(listaPoder.get(2)) {
-			 energiaPoder=(int) (energiaActual*0.5);
+			 energiaPoder+=(int) (energiaActual*0.5+1);
 		 }
 		
 		 if(energiaPoder>nodoElegido.getEnergia()) {		//Si lo derroto solo con el escudo del poder especial
 			 Integer aux=Integer.valueOf((int) (nodoElegido.getEnergia()*0.2+1));
-			 energiaActual=energiaActual+aux;		//Sumo a mi energia el 20% de la energia del enemigo
+			return energiaActual+aux;		//Sumo a mi energia el 20% de la energia del enemigo
 			
 		 }
 		 
 		 else {		             //Si no lo derroto solo con el escudo, la energia faltante la resto de la energia actual
 			 Integer aux=Integer.valueOf((int) (nodoElegido.getEnergia()*0.2+1));
-			 energiaActual=energiaActual+energiaPoder-aux;
+			return energiaActual+energiaPoder-aux;
 			 
 		 }
 		
