@@ -24,7 +24,7 @@ public class Pelear extends SearchAction {
 		
 		List<Node> adyacentes=estado.getAdyacentes();
 		
-		System.out.print(estado.getPosicion());
+	
 		List<Node> posiblesNodos=obtenerEnemigos(adyacentes); 
 		List<Boolean> listaPoder2 = estado.getPoderEspecial();
 		List<Integer> listaTiempo = estado.getTiempoPoderEspecial();
@@ -74,7 +74,7 @@ public class Pelear extends SearchAction {
 				estado.setBossDerrotado(true);								//Condicion de victoria
 				estado.setPosicion(nodoElegido.getId());				
 				estado.setAdyacentes(obtenerAdyacentes(nodoElegido));
-				estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
+			//	estado.setCicloPercepcion(estado.getCicloPercepcion()+1);
 				estado.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
 				
 				return estado;
@@ -94,7 +94,7 @@ public class Pelear extends SearchAction {
 	@Override
 	public Double getCost() {
 		// TODO Auto-generated method stub
-		return 1.5;
+		return 0.5;
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class Pelear extends SearchAction {
 																	//Y se le suma +1 al tiempo de los poderes no utilizados
 		Integer energiaActual=estado.getEnergiaActual();
 		actualizarEnergia(nodoElegido,energiaActual, listaPoder);
-		System.out.print(energiaActual);
+		
 		estado.setEnergiaActual(energiaActual);
 		estado.setTiempoPoderEspecial(listaTiempo);
 		estado.setBossDerrotado(true);								//Condicion de victoria
@@ -138,7 +138,7 @@ public class Pelear extends SearchAction {
 		ambiente.setPosicion(nodoElegido.getId());				
 		ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
 		ambiente.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
-		System.out.print("Energia despues de derrorar al boss" +estado.getEnergiaActual());
+		System.out.println("Boss Derrotado en nodo: "+ estado.getPosicion());
 		return ambiente;
 			}
 			else{
@@ -181,7 +181,7 @@ public class Pelear extends SearchAction {
 				ambiente.setAdyacentes(obtenerAdyacentes(nodoElegido));
 				ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
 				ambiente.setCantidadEnemigos(estado.getCantidadEnemigos()-1);
-				 System.out.print(nodoElegido.getId());
+				
 				 
 				return ambiente;
 				

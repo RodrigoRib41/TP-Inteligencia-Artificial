@@ -27,7 +27,6 @@ public class RecolectarPokebola extends SearchAction{
 		
 		
 		if(posiblesNodos.size()>0) { //Si es mayor que 0 puedo no pelear
-		Random rand = new Random();
 		 
 		Node nodoElegido=posiblesNodos.get(0);
 		
@@ -77,14 +76,14 @@ public class RecolectarPokebola extends SearchAction{
 		
 		ambiente.setPosicion(estado.getPosicion());
 		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
-		ambiente.setCicloPercepcion(estado.getCicloPercepcion());
-		ambiente.setPoderEspecial(estado.getPoderEspecial());
+		ambiente.setCicloPercepcion(estado.getCicloPercepcion()+1);
+	//	ambiente.setPoderEspecial(estado.getPoderEspecial());
 		ambiente.getGraph().getNodes().get(estado.getPosicion()).setEntidad(entidades.VACIO);
 		ambiente.setEnergiaPokemon(estado.getEnergiaActual());
 		ambiente.setTiempoPoderEspecial(tiempo);
 		estado.setBossDerrotado(false);
 		
-		System.out.print("Recolecto pokebola en nodo: " + nodoElegido.getId());
+	//	System.out.print("Recolecto pokebola en nodo: " + nodoElegido.getId());
 		
 		
 		return ambiente;

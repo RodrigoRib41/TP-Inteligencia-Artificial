@@ -30,10 +30,18 @@ public EstadoAmbiente getEstadoAmbiente() {
 		PokemonPerception perception = new PokemonPerception();
 
 		//Antes de pasar la percepcion, actualizamos el movimiento de los enemigos
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		
 		//Le paso su ubicacion
 		perception.setPosicion(a.getPosicion());
-	//	System.out.println("Ciclo Percepcion: "+a.getCicloPercepcion());
+		System.out.println("Ciclo Percepcion: \n"+a.getCicloPercepcion());
 		if((a.getCicloPercepcion()+1)%3==0) {             //Setear de forma random entre 1 y 3 luego de las pruebas
 			a.getEstadoAmbiente().actualizarEnemigos();
 			} 
@@ -108,14 +116,7 @@ public EstadoAmbiente getEstadoAmbiente() {
 		List<Node> aux = new ArrayList<Node>();
 		nodes = graph.getNodes();
 		aux=nodes;
-		//Tengo que devolver solo la ubicacion y que entidad esta alli, borro su energia
-		try {
-		for (Node node : nodes) {
-	    	((Node) aux).setEnergia(0);
-	    }    
-		} catch (Exception e) {
-			System.out.println("Esta vacio el nodo");
-        }
+	
 	    return aux;
 	}
 	

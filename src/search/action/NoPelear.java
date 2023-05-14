@@ -83,7 +83,7 @@ public List<Node> obtenerAdyacentes(Node node){
 	@Override
 	public Double getCost() {
 		// TODO Auto-generated method stub
-		return 2.0;
+		return 1.5;
 	}
 
 	@Override

@@ -48,8 +48,8 @@ public class Pokemon extends SearchBasedAgent{
 	@Override
 	public Action selectAction() {
 		
-		BreathFirstSearch estrategia = new BreathFirstSearch ();
-    // UniformCostSearch estrategia= new UniformCostSearch(new CostFunction());
+	//	BreathFirstSearch estrategia = new BreathFirstSearch ();
+     UniformCostSearch estrategia= new UniformCostSearch(new CostFunction());
       // AStarSearch estrategia = new AStarSearch(new CostFunction(), new Heuristic());
 		
 		Search searchSolver = new Search(estrategia);
